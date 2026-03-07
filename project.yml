@@ -1,0 +1,28 @@
+name: AreUThin
+options:
+  minimumXcodeGenVersion: 2.44.0
+settings:
+  base:
+    SWIFT_VERSION: 5.9
+    IPHONEOS_DEPLOYMENT_TARGET: 17.0
+targets:
+  AreUThin:
+    type: application
+    platform: iOS
+    sources:
+      - AreUThin
+    info:
+      path: AreUThin/Info.plist
+      properties:
+        CFBundleDisplayName: "瘦了吗"
+        UILaunchScreen: {}
+        NSCameraUsageDescription: "用于拍摄餐食图片进行营养分析"
+        NSMicrophoneUsageDescription: "用于语音补充餐食信息"
+        NSSpeechRecognitionUsageDescription: "用于语音转文字"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.sundaypunchtou.areuthin
+        CODE_SIGN_STYLE: Automatic
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: ""
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
