@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		012CE683CEC92934840B4EFE /* FrontendModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48648E75B2C8441E1694ECA3 /* FrontendModels.swift */; };
 		05EB8BFD6DC74BF95C4C2E02 /* MealRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3181DFBE68508C12DEE2DA /* MealRecordView.swift */; };
 		06C01A2DD039F459F5E7309A /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C913440CE445C9056E2694 /* AppStore.swift */; };
 		06FC6D0D1A47AE1816CCF866 /* MealLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A07A7C04297011751565AF /* MealLog.swift */; };
@@ -14,10 +15,13 @@
 		0C9E260796FA842F576D404E /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308895D441541DAEF1A32D52 /* OnboardingView.swift */; };
 		1479BD20AD4A25842DCA70C7 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0423A875D68D839933DE42 /* RootView.swift */; };
 		4099F10C0D336F232ABCBF14 /* MockAIAnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55888FAEB2D57A78D5658F4B /* MockAIAnalysisService.swift */; };
+		4B17541CB4CCEC85A71E6639 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67A56B3C35D0BEF58456EDF /* AppTheme.swift */; };
 		5AC2040EFC8B7477009291A7 /* AIAnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93987D8C58595EDB1634933 /* AIAnalysisService.swift */; };
 		5E9C7605BC6D76A6BE8320D9 /* AreUThinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8347B8930D97C8743E01BE /* AreUThinApp.swift */; };
+		8A17350CC1347B09461C2D50 /* TrendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40731999082E2EE44031CCD0 /* TrendView.swift */; };
 		94DD715A5C705B08522E7AB6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6053CB65FB0B41223B4CA0 /* ProfileView.swift */; };
 		A613E02CA66B6E6631DBA8C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 550CC90ED8D574E66344091A /* Assets.xcassets */; };
+		C74756A128041F1932A92DDD /* CoachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932ABD9FD990C9105E7E321A /* CoachView.swift */; };
 		E8F081124C1DC86080AF5C2A /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D6B453CD6D787F6D6BBBEA /* UserProfile.swift */; };
 		F093692BB4C440418F76B75F /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31506B39E9124ABA570905E0 /* DashboardView.swift */; };
 		F0B838A72B19C905A3C15BE0 /* NutrientProgressCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1F8E34A73DFB75F7FA53B /* NutrientProgressCard.swift */; };
@@ -28,13 +32,17 @@
 		308895D441541DAEF1A32D52 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		31506B39E9124ABA570905E0 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		35DB6D80C6575609E4AF54C1 /* MealAnalysisResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealAnalysisResult.swift; sourceTree = "<group>"; };
+		40731999082E2EE44031CCD0 /* TrendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendView.swift; sourceTree = "<group>"; };
+		48648E75B2C8441E1694ECA3 /* FrontendModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontendModels.swift; sourceTree = "<group>"; };
 		550CC90ED8D574E66344091A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55888FAEB2D57A78D5658F4B /* MockAIAnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAIAnalysisService.swift; sourceTree = "<group>"; };
 		5F3181DFBE68508C12DEE2DA /* MealRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRecordView.swift; sourceTree = "<group>"; };
 		66D6B453CD6D787F6D6BBBEA /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		92A07A7C04297011751565AF /* MealLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealLog.swift; sourceTree = "<group>"; };
+		932ABD9FD990C9105E7E321A /* CoachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachView.swift; sourceTree = "<group>"; };
 		ADD63C0EC07A9DEE6265BD0E /* AreUThin.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AreUThin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF8347B8930D97C8743E01BE /* AreUThinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreUThinApp.swift; sourceTree = "<group>"; };
+		C67A56B3C35D0BEF58456EDF /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		CAB54A83AFD50D65F2EAA42A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CB6053CB65FB0B41223B4CA0 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D3C913440CE445C9056E2694 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
@@ -47,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				A468E2DBF378983045C1C019 /* Components */,
+				FFB2BED52B464FEBF6870B88 /* Theme */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -54,6 +63,7 @@
 		15B3040FB340378F46A789D0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				48648E75B2C8441E1694ECA3 /* FrontendModels.swift */,
 				35DB6D80C6575609E4AF54C1 /* MealAnalysisResult.swift */,
 				92A07A7C04297011751565AF /* MealLog.swift */,
 				66D6B453CD6D787F6D6BBBEA /* UserProfile.swift */,
@@ -82,6 +92,14 @@
 				F2C540279E7A847452307A79 /* Store */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		298F0585E3F2D24AEEE9BA5A /* Trend */ = {
+			isa = PBXGroup;
+			children = (
+				40731999082E2EE44031CCD0 /* TrendView.swift */,
+			);
+			path = Trend;
 			sourceTree = "<group>";
 		};
 		40A17F2F68ABDD6E8205CE91 /* Dashboard */ = {
@@ -142,6 +160,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		AB1168FDAA3BDFBE7E731EA7 /* Coach */ = {
+			isa = PBXGroup;
+			children = (
+				932ABD9FD990C9105E7E321A /* CoachView.swift */,
+			);
+			path = Coach;
+			sourceTree = "<group>";
+		};
 		ABA1AE2B2989258B9DF3253B /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,10 +179,12 @@
 		AE701BBEAC8344D5F7835BD5 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				AB1168FDAA3BDFBE7E731EA7 /* Coach */,
 				40A17F2F68ABDD6E8205CE91 /* Dashboard */,
 				79A558A2FF195FCF0BB59352 /* Onboarding */,
 				49B4B62DFA4D9FE6065D32EA /* Profile */,
 				CCA08DA423CE3170F34DBAF9 /* Record */,
+				298F0585E3F2D24AEEE9BA5A /* Trend */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -175,6 +203,14 @@
 				D3C913440CE445C9056E2694 /* AppStore.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		FFB2BED52B464FEBF6870B88 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				C67A56B3C35D0BEF58456EDF /* AppTheme.swift */,
+			);
+			path = Theme;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,8 +285,11 @@
 			files = (
 				5AC2040EFC8B7477009291A7 /* AIAnalysisService.swift in Sources */,
 				06C01A2DD039F459F5E7309A /* AppStore.swift in Sources */,
+				4B17541CB4CCEC85A71E6639 /* AppTheme.swift in Sources */,
 				5E9C7605BC6D76A6BE8320D9 /* AreUThinApp.swift in Sources */,
+				C74756A128041F1932A92DDD /* CoachView.swift in Sources */,
 				F093692BB4C440418F76B75F /* DashboardView.swift in Sources */,
+				012CE683CEC92934840B4EFE /* FrontendModels.swift in Sources */,
 				07702661B14912D83BD6E359 /* MealAnalysisResult.swift in Sources */,
 				06FC6D0D1A47AE1816CCF866 /* MealLog.swift in Sources */,
 				05EB8BFD6DC74BF95C4C2E02 /* MealRecordView.swift in Sources */,
@@ -259,6 +298,7 @@
 				0C9E260796FA842F576D404E /* OnboardingView.swift in Sources */,
 				94DD715A5C705B08522E7AB6 /* ProfileView.swift in Sources */,
 				1479BD20AD4A25842DCA70C7 /* RootView.swift in Sources */,
+				8A17350CC1347B09461C2D50 /* TrendView.swift in Sources */,
 				E8F081124C1DC86080AF5C2A /* UserProfile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

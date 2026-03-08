@@ -19,18 +19,29 @@ private struct MainTabView: View {
         TabView {
             DashboardView()
                 .tabItem {
-                    Label("今日", systemImage: "chart.bar.fill")
+                    Label("首页", systemImage: "house.fill")
                 }
 
             MealRecordView()
                 .tabItem {
-                    Label("记录", systemImage: "camera.fill")
+                    Label("记录", systemImage: "camera.aperture")
+                }
+
+            TrendView()
+                .tabItem {
+                    Label("趋势", systemImage: "chart.xyaxis.line")
+                }
+
+            CoachView()
+                .tabItem {
+                    Label("营养师", systemImage: "message.fill")
                 }
 
             ProfileView()
                 .tabItem {
-                    Label("我的", systemImage: "person.fill")
+                    Label("我的", systemImage: "person.crop.circle.fill")
                 }
         }
+        .tint(AppTheme.coral)
     }
 }
