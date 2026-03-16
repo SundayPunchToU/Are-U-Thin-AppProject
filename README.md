@@ -1,6 +1,6 @@
-# Are-U-Thin iOS Frontend MVP
+# Are-U-Thin Frontend Monorepo
 
-《瘦了吗》iOS 初版前端工程（SwiftUI，暂不接后端）。
+《瘦了吗》前端仓库，当前同时包含 iOS 版（SwiftUI）和微信小程序版。
 
 ## 当前前端形态
 
@@ -17,10 +17,16 @@
 - `AreUThin/Core`：模型、服务协议、状态管理（含前端 mock 数据）
 - `AreUThin/Features`：按业务拆分页面
 - `AreUThin/Shared`：主题与通用组件
+- `are-u-thin-wechat/miniprogram`：微信小程序前端
+- `are-u-thin-wechat/cloudfunctions`：微信云开发云函数
 
-## 运行
+## 运行 iOS
 
 ```bash
 xcodegen generate
 open AreUThin.xcodeproj
 ```
+
+## 运行微信小程序
+
+使用微信开发者工具打开仓库内的 `are-u-thin-wechat` 目录即可。

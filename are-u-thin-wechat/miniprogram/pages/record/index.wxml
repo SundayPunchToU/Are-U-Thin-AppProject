@@ -1,0 +1,69 @@
+<scroll-view class="record-scroll" scroll-y="true">
+  <view class="screen page-gap">
+    <view class="dashboard-header">
+      <view>
+        <text class="hero-title">Meal Capture</text>
+        <text class="hero-subtitle">拍照 + 语音补充，2 秒得到反馈</text>
+      </view>
+      <view class="dashboard-badge gradient-avatar">
+        <text class="dashboard-badge-text">📷</text>
+      </view>
+    </view>
+
+    <view class="soft-card">
+      <text class="section-title">餐食图片</text>
+      <view class="upload-panel {{imagePath ? 'upload-panel-filled' : ''}}" bindtap="chooseImage">
+        <image wx:if="{{imagePath}}" class="upload-image" src="{{imagePath}}" mode="aspectFill"></image>
+        <view wx:else class="upload-placeholder">
+          <text class="upload-icon">🖼️</text>
+          <text class="body-text">添加你这餐的照片</text>
+        </view>
+      </view>
+      <button class="secondary-pill" bindtap="chooseImage">从相册选择</button>
+    </view>
+
+    <view class="soft-card">
+      <text class="section-title">语音补充</text>
+      <textarea
+        class="note-area"
+        placeholder="例如：牛肉约100g，米饭半碗，零度可乐"
+        placeholder-class="note-placeholder"
+        value="{{voiceNote}}"
+        maxlength="200"
+        bindinput="handleVoiceInput"
+      />
+      <scroll-view class="tag-scroll" scroll-x="true" enable-flex="true">
+        <view class="tag-row">
+          <view wx:for="{{quickTags}}" wx:key="*this" class="pill tag-pill" data-tag="{{item}}" bindtap="applyTag">
+            #{{item}}
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="soft-card">
+      <button class="primary-button {{(!voiceNote || isLoading) ? 'disabled' : ''}}" disabled="{{!voiceNote || isLoading}}" bindtap="analyzeMeal">
+        {{isLoading ? '识别中...' : 'AI 解析并记录'}}
+      </button>
+      <text wx:if="{{progressText}}" class="body-text status-text">{{progressText}}</text>
+      <text wx:if="{{errorText}}" class="error-text">{{errorText}}</text>
+
+      <view wx:if="{{lastAnalysis}}" class="analysis-card">
+        <text class="analysis-title">{{lastAnalysis.guessedName}}</text>
+        <text class="mono-text">{{lastAnalysis.nutrition.calories}} kcal · P{{lastAnalysis.nutrition.protein}} C{{lastAnalysis.nutrition.carbs}} F{{lastAnalysis.nutrition.fat}}</text>
+        <text class="body-text">{{lastAnalysis.suggestion}}</text>
+      </view>
+    </view>
+
+    <view class="soft-card">
+      <text class="section-title">今日记录</text>
+      <view wx:for="{{mealLogs}}" wx:key="id" class="history-item">
+        <view>
+          <text class="history-name">{{item.name}}</text>
+          <text class="body-text">{{item.scoreTitle}}</text>
+        </view>
+        <text class="mono-text">{{item.nutrition.calories}} kcal</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

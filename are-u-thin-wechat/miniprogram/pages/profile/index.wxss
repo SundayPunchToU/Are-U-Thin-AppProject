@@ -1,0 +1,74 @@
+.profile-scroll {
+  height: 100vh;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+}
+
+.profile-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 64rpx;
+  font-size: 54rpx;
+  font-weight: 700;
+  box-shadow: 0 20rpx 36rpx rgba(250, 114, 93, 0.22);
+}
+
+.profile-copy {
+  margin-left: 22rpx;
+}
+
+.profile-name {
+  display: block;
+  margin-bottom: 8rpx;
+  font-size: 42rpx;
+  font-weight: 600;
+  color: #28282e;
+}
+
+.plan-goal {
+  display: block;
+  margin-top: 18rpx;
+  margin-bottom: 10rpx;
+  font-size: 48rpx;
+  line-height: 1.2;
+  color: #28282e;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24rpx;
+}
+
+.setting-label {
+  font-size: 30rpx;
+  color: #28282e;
+}
+
+.pro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 22rpx;
+}
+
+.price-pill {
+  margin-right: 16rpx;
+  margin-bottom: 12rpx;
+  padding: 18rpx 28rpx;
+  border-radius: 999rpx;
+  color: #ffffff;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.price-pill-amber {
+  background: #fabc5f;
+}
+
+.price-pill-coral {
+  background: #fa725d;
+}

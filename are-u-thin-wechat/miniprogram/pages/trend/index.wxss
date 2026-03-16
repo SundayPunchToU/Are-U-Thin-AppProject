@@ -1,0 +1,82 @@
+.trend-scroll {
+  height: 100vh;
+}
+
+.chart-wrap {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  min-height: 280rpx;
+  margin-top: 24rpx;
+  margin-bottom: 18rpx;
+}
+
+.chart-item {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-bar-track {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 48rpx;
+  height: 196rpx;
+}
+
+.chart-bar {
+  width: 48rpx;
+  border-radius: 16rpx;
+}
+
+.badge-row {
+  display: flex;
+  align-items: center;
+  margin-top: 24rpx;
+}
+
+.badge-emoji {
+  width: 60rpx;
+  font-size: 42rpx;
+}
+
+.badge-copy {
+  flex: 1;
+  margin-left: 10rpx;
+}
+
+.badge-title {
+  display: block;
+  margin-bottom: 4rpx;
+  font-size: 28rpx;
+  color: #28282e;
+}
+
+.badge-unlocked {
+  font-size: 24rpx;
+  color: #69b8a3;
+}
+
+.badge-progress {
+  width: 148rpx;
+  height: 14rpx;
+  border-radius: 999rpx;
+  background: rgba(116, 120, 132, 0.12);
+  overflow: hidden;
+}
+
+.badge-progress-fill {
+  height: 100%;
+  border-radius: 999rpx;
+  background: #fabc5f;
+}
+
+.poster-pill {
+  margin-top: 20rpx;
+  display: inline-flex;
+  align-self: flex-start;
+  background: #fa725d;
+  color: #ffffff;
+}

@@ -1,0 +1,96 @@
+.coach-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 32rpx 32rpx 198rpx;
+}
+
+.coach-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.coach-emoji {
+  font-size: 56rpx;
+}
+
+.message-list {
+  flex: 1;
+  min-height: 760rpx;
+  padding: 8rpx 0;
+}
+
+.message-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 16rpx;
+}
+
+.message-row-user {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  max-width: 78%;
+  padding: 22rpx 26rpx;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.message-bubble-user {
+  background: #fa725d;
+}
+
+.message-text {
+  font-size: 28rpx;
+  line-height: 1.55;
+  color: #28282e;
+}
+
+.message-text-user {
+  color: #ffffff;
+}
+
+.prompt-scroll {
+  margin-top: 10rpx;
+  margin-bottom: 18rpx;
+  white-space: nowrap;
+}
+
+.prompt-row {
+  display: inline-flex;
+  padding-right: 20rpx;
+}
+
+.prompt-pill {
+  margin-right: 14rpx;
+}
+
+.input-bar {
+  display: flex;
+  align-items: center;
+}
+
+.coach-input {
+  flex: 1;
+  height: 88rpx;
+  padding: 0 28rpx;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.84);
+  font-size: 28rpx;
+}
+
+.send-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 88rpx;
+  height: 88rpx;
+  margin-left: 16rpx;
+  border-radius: 44rpx;
+  background: #69b8a3;
+  color: #ffffff;
+  font-size: 34rpx;
+}

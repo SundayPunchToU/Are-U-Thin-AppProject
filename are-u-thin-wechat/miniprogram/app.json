@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/onboarding/index",
+    "pages/dashboard/index",
+    "pages/record/index",
+    "pages/trend/index",
+    "pages/coach/index",
+    "pages/profile/index"
+  ],
+  "window": {
+    "backgroundColor": "#FFF4EB",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FFF4EB",
+    "navigationBarTitleText": "瘦了吗",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#747884",
+    "selectedColor": "#FA725D",
+    "backgroundColor": "#FDF8F2",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/dashboard/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/record/index",
+        "text": "记录"
+      },
+      {
+        "pagePath": "pages/trend/index",
+        "text": "趋势"
+      },
+      {
+        "pagePath": "pages/coach/index",
+        "text": "营养师"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

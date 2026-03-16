@@ -24,3 +24,9 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# WeChat Mini Program
+are-u-thin-wechat/project.private.config.json
+are-u-thin-wechat/node_modules/
+are-u-thin-wechat/miniprogram_npm/
+are-u-thin-wechat/cloudfunctions/**/node_modules/

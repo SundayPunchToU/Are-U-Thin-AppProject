@@ -1,0 +1,36 @@
+<view class="coach-screen">
+  <view class="coach-header">
+    <view>
+      <text class="hero-title">AI Diet Coach</text>
+      <text class="hero-subtitle">支持多轮追问与温和反馈</text>
+    </view>
+    <text class="coach-emoji">🤖</text>
+  </view>
+
+  <scroll-view class="message-list" scroll-y="true" scroll-into-view="{{scrollTarget}}">
+    <view wx:for="{{coachMessages}}" wx:key="id" id="message-{{item.id}}" class="message-row {{item.fromUser ? 'message-row-user' : ''}}">
+      <view class="message-bubble {{item.fromUser ? 'message-bubble-user' : ''}}">
+        <text class="message-text {{item.fromUser ? 'message-text-user' : ''}}">{{item.text}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <scroll-view class="prompt-scroll" scroll-x="true" enable-flex="true">
+    <view class="prompt-row">
+      <view
+        wx:for="{{quickPrompts}}"
+        wx:key="*this"
+        class="pill prompt-pill"
+        data-prompt="{{item}}"
+        bindtap="applyPrompt"
+      >
+        {{item}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="input-bar">
+    <input class="coach-input" placeholder="输入问题" value="{{draft}}" bindinput="handleDraftInput" confirm-type="send" bindconfirm="sendDraft" />
+    <view class="send-button" bindtap="sendDraft">➤</view>
+  </view>
+</view>

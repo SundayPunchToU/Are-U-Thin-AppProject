@@ -1,0 +1,47 @@
+<scroll-view class="trend-scroll" scroll-y="true">
+  <view class="screen page-gap">
+    <view>
+      <text class="hero-title">Weekly Insights</text>
+      <text class="hero-subtitle">连续 {{streakDays}} 天保持记录</text>
+    </view>
+
+    <view class="soft-card">
+      <text class="section-title">本周热量趋势</text>
+      <view class="chart-wrap">
+        <view wx:for="{{weeklyTrend}}" wx:key="label" class="chart-item">
+          <view class="chart-bar-track">
+            <view
+              class="chart-bar"
+              style="height: {{item.barHeight}}rpx; background: {{item.hitTarget ? '#69B8A3' : '#FA725D'}};"
+            ></view>
+          </view>
+          <text class="mono-text">{{item.label}}</text>
+        </view>
+      </view>
+      <text class="body-text">绿色表示达标，红色表示超配额</text>
+    </view>
+
+    <view class="soft-card">
+      <text class="section-title">成就徽章</text>
+      <view wx:for="{{badges}}" wx:key="title" class="badge-row">
+        <text class="badge-emoji">{{item.emoji}}</text>
+        <view class="badge-copy">
+          <text class="badge-title">{{item.title}}</text>
+          <text class="mono-text">{{item.subtitle}}</text>
+        </view>
+        <text wx:if="{{item.unlocked}}" class="badge-unlocked">已解锁</text>
+        <view wx:else class="badge-progress">
+          <view class="badge-progress-fill" style="width: {{item.progressWidth}}%;"></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="soft-card">
+      <text class="section-title">本周总结</text>
+      <text class="body-text">
+        你的周均热量低于目标约 6%，控制相对稳定。建议下周保持工作日晚餐的蔬菜比例，周末提前准备低卡零食。
+      </text>
+      <view class="pill poster-pill">✦ 生成打卡海报</view>
+    </view>
+  </view>
+</scroll-view>

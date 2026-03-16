@@ -1,0 +1,60 @@
+<scroll-view class="dashboard-scroll" scroll-y="true">
+  <view class="screen page-gap">
+    <view class="dashboard-header">
+      <view>
+        <text class="hero-title">Today, you glow</text>
+        <text class="hero-subtitle">连续打卡 {{streakDays}} 天</text>
+      </view>
+      <view class="dashboard-badge gradient-avatar">
+        <text class="dashboard-badge-text">🥗</text>
+      </view>
+    </view>
+
+    <scroll-view class="story-strip" scroll-x="true" enable-flex="true">
+      <view class="story-row">
+        <view wx:for="{{storyProfiles}}" wx:key="name" class="story-item">
+          <view class="story-ring">
+            <view class="story-inner">
+              <text class="story-emoji">{{item.emoji}}</text>
+            </view>
+          </view>
+          <text class="story-name">{{item.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="soft-card">
+      <text class="section-title">今日目标</text>
+      <text class="goal-calorie mono-text">{{todayGoal.current}} / {{todayGoal.target}} kcal</text>
+      <view class="progress-track goal-progress">
+        <view class="progress-fill" style="width: {{todayGoal.progress}}%; background: #FA725D;"></view>
+      </view>
+      <text class="body-text">{{latestSuggestion}}</text>
+    </view>
+
+    <view class="soft-card">
+      <text class="section-title">三大营养素</text>
+      <view wx:for="{{macroTargets}}" wx:key="title" class="macro-item">
+        <view class="macro-head">
+          <text class="macro-title">{{item.title}}</text>
+          <text class="mono-text">{{item.currentText}}/{{item.targetText}} g</text>
+        </view>
+        <view class="progress-track">
+          <view class="progress-fill" style="width: {{item.progress}}%; background: {{item.tint}};"></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="feed-section">
+      <text class="section-title feed-title">灵感 Feed</text>
+      <view wx:for="{{inspirationFeed}}" wx:key="title" class="feed-card">
+        <view class="feed-cover" style="background: linear-gradient(135deg, {{item.colors[0]}} 0%, {{item.colors[1]}} 100%);">
+          <text class="feed-badge">{{item.badge}}</text>
+        </view>
+        <text class="feed-card-title">{{item.title}}</text>
+        <text class="body-text">{{item.subtitle}}</text>
+        <text class="mono-text">≈ {{item.calories}} kcal</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

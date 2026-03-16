@@ -1,0 +1,46 @@
+<scroll-view class="profile-scroll" scroll-y="true">
+  <view class="screen page-gap">
+    <view class="profile-header">
+      <view class="profile-avatar gradient-avatar">L</view>
+      <view class="profile-copy">
+        <text class="profile-name">{{profile.nickname}}</text>
+        <text class="hero-subtitle">饮食管理进行中</text>
+      </view>
+    </view>
+
+    <view class="soft-card">
+      <text class="section-title">当前计划</text>
+      <text class="plan-goal">{{goalLabel}}</text>
+      <text class="mono-text">日热量目标 {{dailyCalorieTarget}} kcal</text>
+      <text class="body-text">{{macroPlanText}}</text>
+    </view>
+
+    <view class="soft-card">
+      <text class="section-title">功能设置</text>
+
+      <view class="setting-row">
+        <text class="setting-label">晚间达标提醒</text>
+        <switch color="#FA725D" checked="{{settings.reminderAtNight}}" data-key="reminderAtNight" bindchange="handleSettingChange" />
+      </view>
+
+      <view class="setting-row">
+        <text class="setting-label">语音补充增强</text>
+        <switch color="#FA725D" checked="{{settings.useVoiceEnhancement}}" data-key="useVoiceEnhancement" bindchange="handleSettingChange" />
+      </view>
+
+      <view class="setting-row">
+        <text class="setting-label">自动生成分享海报</text>
+        <switch color="#FA725D" checked="{{settings.socialPosterEnabled}}" data-key="socialPosterEnabled" bindchange="handleSettingChange" />
+      </view>
+    </view>
+
+    <view class="soft-card">
+      <text class="section-title">Pro 会员</text>
+      <text class="body-text">解锁无限识别、深度营养追踪和一周备餐建议</text>
+      <view class="pro-actions">
+        <view class="price-pill price-pill-amber">👑 19.9 元/月</view>
+        <view class="price-pill price-pill-coral">✦ 198 元/年</view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
