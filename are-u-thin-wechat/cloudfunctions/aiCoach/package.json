@@ -1,0 +1,13 @@
+{
+  "name": "aiCoach",
+  "version": "1.0.0",
+  "description": "AI diet coach cloud function",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests configured\""
+  },
+  "license": "ISC",
+  "dependencies": {
+    "wx-server-sdk": "~2.4.0"
+  }
+}

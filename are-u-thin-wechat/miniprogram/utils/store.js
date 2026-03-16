@@ -167,6 +167,40 @@ function buildTrendViewModel() {
   };
 }
 
+function buildCoachRequestContext() {
+  const profile = getProfile() || appData.createDefaultProfile();
+  const mealLogs = getMealLogs();
+  const latestSuggestion = getLatestSuggestion();
+  const todaySummary = appData.getTodaySummary(mealLogs);
+  const dailyTarget = appData.calculateDailyCalorieTarget(profile);
+  const goalOption = appData.getGoalOption(profile.goal);
+  const recentMeals = mealLogs.slice(0, 3).map((item) => ({
+    name: item.name,
+    note: item.note,
+    calories: item.nutrition.calories,
+    protein: item.nutrition.protein,
+    carbs: item.nutrition.carbs,
+    fat: item.nutrition.fat,
+    scoreTitle: item.scoreTitle,
+  }));
+
+  return {
+    profile: {
+      nickname: profile.nickname,
+      age: profile.age,
+      heightCm: profile.heightCm,
+      weightKg: profile.weightKg,
+      activityFactor: profile.activityFactor,
+      goal: goalOption.label,
+      dailyCalorieTarget: dailyTarget,
+    },
+    todaySummary,
+    latestSuggestion,
+    recentMeals,
+    settings: getSettings(),
+  };
+}
+
 module.exports = {
   ensureState,
   getProfile,
@@ -186,5 +220,6 @@ module.exports = {
   addCoachMessage,
   buildDashboardViewModel,
   buildTrendViewModel,
+  buildCoachRequestContext,
   appData,
 };

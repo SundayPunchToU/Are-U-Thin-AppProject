@@ -9,11 +9,16 @@ App({
 
     store.ensureState();
 
-    if (wx.cloud && this.globalData.env) {
-      wx.cloud.init({
-        env: this.globalData.env,
+    if (wx.cloud) {
+      const cloudOptions = {
         traceUser: true,
-      });
+      };
+
+      if (this.globalData.env) {
+        cloudOptions.env = this.globalData.env;
+      }
+
+      wx.cloud.init(cloudOptions);
     }
   },
 });

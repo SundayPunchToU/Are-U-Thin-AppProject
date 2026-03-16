@@ -7,10 +7,19 @@
     <text class="coach-emoji">🤖</text>
   </view>
 
+  <view class="agent-status {{agentMode === 'cloud' ? 'agent-status-connected' : 'agent-status-fallback'}}">
+    <text>{{agentMode === 'cloud' ? 'Agent 已连接' : '演示模式'}}</text>
+  </view>
+
   <scroll-view class="message-list" scroll-y="true" scroll-into-view="{{scrollTarget}}">
     <view wx:for="{{coachMessages}}" wx:key="id" id="message-{{item.id}}" class="message-row {{item.fromUser ? 'message-row-user' : ''}}">
       <view class="message-bubble {{item.fromUser ? 'message-bubble-user' : ''}}">
         <text class="message-text {{item.fromUser ? 'message-text-user' : ''}}">{{item.text}}</text>
+      </view>
+    </view>
+    <view wx:if="{{isLoading}}" class="message-row">
+      <view class="message-bubble">
+        <text class="message-text">正在结合你的目标和今日饮食记录思考...</text>
       </view>
     </view>
   </scroll-view>
@@ -29,8 +38,10 @@
     </view>
   </scroll-view>
 
+  <text wx:if="{{errorText}}" class="coach-error">{{errorText}}</text>
+
   <view class="input-bar">
     <input class="coach-input" placeholder="输入问题" value="{{draft}}" bindinput="handleDraftInput" confirm-type="send" bindconfirm="sendDraft" />
-    <view class="send-button" bindtap="sendDraft">➤</view>
+    <view class="send-button {{isLoading ? 'send-button-disabled' : ''}}" bindtap="sendDraft">➤</view>
   </view>
 </view>

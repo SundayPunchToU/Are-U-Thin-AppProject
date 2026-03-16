@@ -12,6 +12,25 @@
   margin-bottom: 24rpx;
 }
 
+.agent-status {
+  display: inline-flex;
+  align-self: flex-start;
+  margin-bottom: 16rpx;
+  padding: 12rpx 20rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+}
+
+.agent-status-connected {
+  background: rgba(105, 184, 163, 0.16);
+  color: #2e8e79;
+}
+
+.agent-status-fallback {
+  background: rgba(250, 114, 93, 0.14);
+  color: #d45e4d;
+}
+
 .coach-emoji {
   font-size: 56rpx;
 }
@@ -68,6 +87,13 @@
   margin-right: 14rpx;
 }
 
+.coach-error {
+  margin-bottom: 18rpx;
+  font-size: 24rpx;
+  line-height: 1.5;
+  color: #d45e4d;
+}
+
 .input-bar {
   display: flex;
   align-items: center;
@@ -93,4 +119,8 @@
   background: #69b8a3;
   color: #ffffff;
   font-size: 34rpx;
+}
+
+.send-button-disabled {
+  opacity: 0.45;
 }
