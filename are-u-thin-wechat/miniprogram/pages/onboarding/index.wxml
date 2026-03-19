@@ -1,0 +1,67 @@
+<view class="screen-tight onboarding-screen">
+  <view class="onboarding-head">
+    <text class="hero-title">瘦了吗</text>
+    <text class="hero-subtitle">先用 30 秒建立你的健康画像</text>
+  </view>
+
+  <view class="soft-card onboarding-card">
+    <text class="section-title">基础信息</text>
+
+    <view class="metric-block">
+      <view class="metric-header">
+        <text class="metric-label">年龄</text>
+        <text class="metric-value">{{age}} 岁</text>
+      </view>
+      <slider min="16" max="80" step="1" value="{{age}}" activeColor="#FA725D" backgroundColor="#E9EBEF" bindchange="handleAgeChange" />
+    </view>
+
+    <view class="metric-block">
+      <view class="metric-header">
+        <text class="metric-label">身高</text>
+        <text class="metric-value">{{heightCm}} cm</text>
+      </view>
+      <slider min="140" max="200" step="1" value="{{heightCm}}" activeColor="#69B8A3" backgroundColor="#E9EBEF" bindchange="handleHeightChange" />
+    </view>
+
+    <view class="metric-block metric-block-last">
+      <view class="metric-header">
+        <text class="metric-label">体重</text>
+        <text class="metric-value">{{weightKg}} kg</text>
+      </view>
+      <slider min="35" max="120" step="1" value="{{weightKg}}" activeColor="#FABC5F" backgroundColor="#E9EBEF" bindchange="handleWeightChange" />
+    </view>
+  </view>
+
+  <view class="soft-card onboarding-card">
+    <text class="section-title">日常活动</text>
+    <view class="metric-header">
+      <text class="metric-label">活动系数</text>
+      <text class="metric-value">{{activityText}}</text>
+    </view>
+    <slider min="12" max="19" step="1" value="{{activityValue}}" activeColor="#69B8A3" backgroundColor="#E9EBEF" bindchange="handleActivityChange" />
+    <text class="body-text">数值越高，代表日常通勤、训练和站立时长越多。</text>
+  </view>
+
+  <view class="soft-card onboarding-card">
+    <text class="section-title">目标模式</text>
+    <view class="goal-grid">
+      <view
+        wx:for="{{goalOptions}}"
+        wx:key="value"
+        class="goal-item {{goal === item.value ? 'goal-item-active' : ''}}"
+        data-goal="{{item.value}}"
+        bindtap="chooseGoal"
+      >
+        <text class="goal-text {{goal === item.value ? 'goal-text-active' : ''}}">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="soft-card preview-card">
+    <text class="section-title">每日目标预览</text>
+    <text class="preview-calorie">{{calorieTarget}} kcal</text>
+    <text class="body-text">完成引导后会自动填充首页卡片、营养目标和趋势示例数据。</text>
+  </view>
+
+  <button class="primary-button" bindtap="submitProfile">进入 App</button>
+</view>

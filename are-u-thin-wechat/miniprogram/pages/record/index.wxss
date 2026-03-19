@@ -1,0 +1,249 @@
+.record-scroll {
+  height: 100vh;
+}
+
+.upload-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 380rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  border-radius: 32rpx;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(250, 250, 250, 0.68) 100%);
+  overflow: hidden;
+}
+
+.upload-panel-filled {
+  background: #f7f7f7;
+}
+
+.upload-image {
+  width: 100%;
+  height: 100%;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-icon {
+  margin-bottom: 12rpx;
+  font-size: 52rpx;
+}
+
+.secondary-pill {
+  display: inline-flex;
+  width: auto;
+  padding: 20rpx 28rpx;
+  border-radius: 999rpx;
+  background: #69b8a3;
+  color: #ffffff;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.note-area {
+  width: 100%;
+  height: 180rpx;
+  margin-top: 18rpx;
+  padding: 24rpx;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.78);
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+.note-placeholder {
+  color: #9aa0ab;
+}
+
+.tag-scroll {
+  width: 100%;
+  margin-top: 18rpx;
+  white-space: nowrap;
+}
+
+.tag-row {
+  display: inline-flex;
+  padding-right: 20rpx;
+}
+
+.tag-pill {
+  margin-right: 14rpx;
+}
+
+.status-text {
+  display: block;
+  margin-top: 18rpx;
+}
+
+.error-text {
+  display: block;
+  margin-top: 18rpx;
+  font-size: 26rpx;
+  color: #e25a4b;
+}
+
+.analysis-card {
+  margin-top: 18rpx;
+  padding: 20rpx;
+  border-radius: 24rpx;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.analysis-title {
+  display: block;
+  margin-bottom: 8rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #28282e;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20rpx;
+}
+
+.history-name {
+  display: block;
+  margin-bottom: 6rpx;
+  font-size: 28rpx;
+  color: #28282e;
+}
+
+/* 三餐记录样式 */
+.meal-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+  margin-bottom: 32rpx;
+}
+
+.meal-section {
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 24rpx;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.meal-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #28282e;
+  margin-bottom: 16rpx;
+}
+
+.meal-item {
+  padding: 16rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 16rpx;
+  margin-bottom: 12rpx;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.meal-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8rpx;
+}
+
+.meal-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #28282e;
+}
+
+.meal-tag {
+  font-size: 22rpx;
+  color: #FA725D;
+  background: rgba(250, 114, 93, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 999rpx;
+}
+
+.meal-nutrition {
+  display: block;
+  font-size: 22rpx;
+  color: #747884;
+  margin-bottom: 4rpx;
+}
+
+.meal-calories {
+  display: block;
+  font-size: 22rpx;
+  color: #747884;
+  font-family: 'Courier New', monospace;
+}
+
+.meal-empty {
+  display: block;
+  text-align: center;
+  font-size: 24rpx;
+  color: #b8b8c8;
+  padding: 32rpx 0;
+}
+
+/* 弹窗样式 */
+.meal-dialog {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 32rpx 32rpx 0 0;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx 40rpx;
+  border-bottom: 2rpx solid rgba(0, 0, 0, 0.06);
+}
+
+.dialog-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #28282e;
+}
+
+.dialog-close {
+  font-size: 32rpx;
+  color: #747884;
+  padding: 8rpx;
+}
+
+.meal-options {
+  padding: 32rpx 40rpx;
+}
+
+.meal-option {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20rpx;
+  margin-bottom: 16rpx;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.meal-option-emoji {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.meal-option-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #28282e;
+  margin-right: 12rpx;
+}
+
+.meal-option-desc {
+  font-size: 24rpx;
+  color: #747884;
+}

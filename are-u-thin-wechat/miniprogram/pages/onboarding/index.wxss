@@ -1,0 +1,92 @@
+.onboarding-screen {
+  display: flex;
+  flex-direction: column;
+}
+
+.onboarding-screen > view,
+.onboarding-screen > button {
+  margin-top: 24rpx;
+}
+
+.onboarding-screen > view:first-child,
+.onboarding-screen > button:first-child {
+  margin-top: 0;
+}
+
+.onboarding-head {
+  margin-top: 20rpx;
+}
+
+.onboarding-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-block {
+  margin-top: 24rpx;
+}
+
+.metric-block-last {
+  margin-bottom: 4rpx;
+}
+
+.metric-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14rpx;
+}
+
+.metric-label {
+  font-size: 30rpx;
+  color: #28282e;
+}
+
+.metric-value {
+  font-size: 28rpx;
+  color: #747884;
+  font-family: "Menlo", "SFMono-Regular", monospace;
+}
+
+.goal-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 24rpx;
+}
+
+.goal-item {
+  width: 48.5%;
+  margin-bottom: 12rpx;
+  padding: 26rpx 0;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.72);
+  text-align: center;
+}
+
+.goal-item-active {
+  background: #fa725d;
+}
+
+.goal-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #28282e;
+}
+
+.goal-text-active {
+  color: #ffffff;
+}
+
+.preview-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-calorie {
+  margin-top: 18rpx;
+  font-size: 52rpx;
+  line-height: 1.2;
+  color: #28282e;
+  font-family: "Menlo", "SFMono-Regular", monospace;
+}

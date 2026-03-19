@@ -1,0 +1,152 @@
+page {
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 86% 8%, rgba(255, 255, 255, 0.7) 0, rgba(255, 255, 255, 0.7) 110rpx, transparent 111rpx),
+    radial-gradient(circle at 12% 18%, rgba(250, 114, 93, 0.16) 0, rgba(250, 114, 93, 0.16) 90rpx, transparent 91rpx),
+    radial-gradient(circle at 85% 88%, rgba(105, 184, 163, 0.15) 0, rgba(105, 184, 163, 0.15) 120rpx, transparent 121rpx),
+    linear-gradient(135deg, #fff4eb 0%, #f6f9ff 100%);
+  color: #28282e;
+  font-family: "Avenir Next", "PingFang SC", sans-serif;
+}
+
+view,
+text,
+button,
+input,
+textarea,
+label,
+switch,
+image,
+scroll-view {
+  box-sizing: border-box;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  line-height: inherit;
+  border: none;
+  border-radius: 0;
+}
+
+button::after {
+  border: none;
+}
+
+.screen {
+  min-height: 100vh;
+  padding: 32rpx 32rpx 198rpx;
+}
+
+.screen-tight {
+  min-height: 100vh;
+  padding: 40rpx 32rpx 56rpx;
+}
+
+.hero-title {
+  font-size: 60rpx;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #28282e;
+}
+
+.hero-subtitle {
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+  color: #747884;
+}
+
+.soft-card {
+  width: 100%;
+  padding: 28rpx;
+  border-radius: 40rpx;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 20rpx 48rpx rgba(26, 26, 26, 0.08);
+}
+
+.section-title {
+  font-size: 34rpx;
+  line-height: 1.3;
+  font-weight: 600;
+  color: #28282e;
+}
+
+.body-text {
+  font-size: 28rpx;
+  line-height: 1.6;
+  color: #747884;
+}
+
+.mono-text {
+  font-size: 24rpx;
+  line-height: 1.4;
+  color: #747884;
+  font-family: "Menlo", "SFMono-Regular", monospace;
+}
+
+.primary-button {
+  width: 100%;
+  padding: 28rpx 32rpx;
+  border-radius: 36rpx;
+  background: linear-gradient(135deg, #fc8a68 0%, #ffb46f 100%);
+  color: #ffffff;
+  font-size: 32rpx;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 20rpx 36rpx rgba(252, 138, 104, 0.25);
+}
+
+.primary-button.disabled {
+  opacity: 0.45;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14rpx 24rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.82);
+  font-size: 24rpx;
+  color: #28282e;
+}
+
+.gradient-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fc8a68 0%, #ffb46f 100%);
+  color: #ffffff;
+}
+
+.progress-track {
+  width: 100%;
+  height: 14rpx;
+  overflow: hidden;
+  border-radius: 999rpx;
+  background: rgba(116, 120, 132, 0.12);
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999rpx;
+}
+
+.page-gap {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-gap > view,
+.page-gap > scroll-view,
+.page-gap > button {
+  margin-top: 24rpx;
+}
+
+.page-gap > view:first-child,
+.page-gap > scroll-view:first-child,
+.page-gap > button:first-child {
+  margin-top: 0;
+}
