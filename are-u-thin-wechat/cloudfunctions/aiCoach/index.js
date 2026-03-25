@@ -1,15 +1,11 @@
-const https = require("https");
-const { URL } = require("url");
 const cloud = require("wx-server-sdk");
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV,
 });
 
-const DEFAULT_API_URL =
-  process.env.AI_BASE_URL || "https://api.openai.com/v1/chat/completions";
-const DEFAULT_MODEL = process.env.AI_MODEL || "gpt-4o-mini";
-const DEFAULT_TEMPERATURE = Number(process.env.AI_TEMPERATURE || 0.7);
+// 使用 CloudBase 内置 AI 模型
+const MODEL = "hunyuan-2.0-instruct-20251111";
 
 function sanitizeMessages(messages) {
   return (messages || [])
@@ -37,7 +33,7 @@ function buildContextText(context) {
     ? recentMeals
         .map(
           (meal, index) =>
-            `${index + 1}. ${meal.name}，${meal.calories} kcal，P${meal.protein} C${meal.carbs} F${meal.fat}，备注：${meal.note || "无"}，评价：${meal.scoreTitle || "无"}`
+            `${index + 1}. ${meal.name}，${meal.nutrition?.calories || 0} kcal，备注：${meal.note || "无"}，评价：${meal.scoreTitle || "无"}`
         )
         .join("\n")
     : "暂无最近餐食记录";
@@ -50,7 +46,6 @@ function buildContextText(context) {
     `体重：${profile.weightKg || "未知"} kg`,
     `活动系数：${profile.activityFactor || "未知"}`,
     `目标：${profile.goal || "未设置"}`,
-    `日热量目标：${profile.dailyCalorieTarget || "未知"} kcal`,
     "",
     "今日摄入：",
     `热量：${todaySummary.calories || 0} kcal`,
@@ -71,7 +66,7 @@ function buildContextText(context) {
 
 function buildSystemPrompt(context) {
   return [
-    "你是“瘦了吗”的 AI 营养师，负责回答饮食、体重管理、训练后补给、外卖选择和习惯养成问题。",
+    "你是「瘦了吗」的 AI 营养师，负责回答饮食、体重管理、训练后补给、外卖选择和习惯养成问题。",
     "回答要求：",
     "1. 默认用简体中文回答，语气温和、直接、可执行。",
     "2. 结合提供的用户画像、今日摄入和最近餐食记录给出建议，不要忽略上下文。",
@@ -85,120 +80,123 @@ function buildSystemPrompt(context) {
   ].join("\n");
 }
 
-function requestJson(urlText, payload, headers) {
-  return new Promise((resolve, reject) => {
-    const url = new URL(urlText);
-    const body = JSON.stringify(payload);
-    const request = https.request(
+function buildMealAnalysisSystemPrompt(context) {
+  return [
+    "你是一位专业的营养师，擅长根据用户描述分析餐食的营养成分。",
+    "请根据用户提供的餐食描述，估算热量和营养成分，并给出个性化建议。",
+    "",
+    "用户信息：",
+    buildContextText(context),
+    "",
+    "回复格式要求：",
+    "请严格按照以下 JSON 格式回复，不要添加任何额外文字：",
+    '{"mealName":"餐食名称","calories":热量数值,"protein":蛋白质克数,"carbs":碳水克数,"fat":脂肪克数,"scoreTitle":"简短评价","suggestion":"具体建议","identifiedFoods":[{"name":"食物名称","portion":"份量估计","cookingMethod":"烹饪方式"}]}',
+  ].join("\n");
+}
+
+async function callAI(systemPrompt, messages) {
+  // 使用 wx-server-sdk 内置的 AI 能力
+  const ai = cloud.ai();
+  
+  const response = await ai.generateText({
+    model: MODEL,
+    messages: [
       {
-        protocol: url.protocol,
-        hostname: url.hostname,
-        port: url.port || undefined,
-        path: `${url.pathname}${url.search}`,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Content-Length": Buffer.byteLength(body),
-          ...headers,
-        },
+        role: "system",
+        content: systemPrompt,
       },
-      (response) => {
-        let rawData = "";
-        response.on("data", (chunk) => {
-          rawData += chunk;
-        });
-        response.on("end", () => {
-          try {
-            const parsed = rawData ? JSON.parse(rawData) : {};
-            if (response.statusCode >= 200 && response.statusCode < 300) {
-              resolve(parsed);
-              return;
-            }
-
-            reject(
-              new Error(
-                parsed.error && parsed.error.message
-                  ? parsed.error.message
-                  : `AI service responded with status ${response.statusCode}`
-              )
-            );
-          } catch (error) {
-            reject(error);
-          }
-        });
-      }
-    );
-
-    request.on("error", reject);
-    request.write(body);
-    request.end();
+      ...messages,
+    ],
   });
+
+  return response?.text?.trim();
 }
 
 exports.main = async (event) => {
-  if (event.action !== "chat") {
-    return {
-      success: false,
-      code: "UNSUPPORTED_ACTION",
-      message: "Unsupported action",
-    };
-  }
-
-  if (!process.env.AI_API_KEY) {
-    return {
-      success: false,
-      code: "CONFIG_MISSING",
-      message:
-        "AI_API_KEY 未配置。请在云函数 aiCoach 中配置 AI_API_KEY、AI_BASE_URL、AI_MODEL 环境变量。",
-    };
-  }
-
-  const messages = sanitizeMessages(event.messages);
-  if (!messages.length || messages[messages.length - 1].role !== "user") {
-    return {
-      success: false,
-      code: "INVALID_MESSAGES",
-      message: "The latest message must be from the user.",
-    };
-  }
-
-  const response = await requestJson(
-    DEFAULT_API_URL,
-    {
-      model: DEFAULT_MODEL,
-      temperature: DEFAULT_TEMPERATURE,
-      messages: [
-        {
-          role: "system",
-          content: buildSystemPrompt(event.context),
-        },
-        ...messages,
-      ],
-    },
-    {
-      Authorization: `Bearer ${process.env.AI_API_KEY}`,
+  // 餐食分析
+  if (event.action === "analyzeMeal") {
+    const messages = sanitizeMessages(event.messages);
+    if (!messages.length) {
+      return {
+        success: false,
+        code: "INVALID_MESSAGES",
+        message: "请提供餐食描述",
+      };
     }
-  );
 
-  const choice = response.choices && response.choices[0];
-  const reply =
-    choice &&
-    choice.message &&
-    typeof choice.message.content === "string" &&
-    choice.message.content.trim();
+    try {
+      const reply = await callAI(
+        buildMealAnalysisSystemPrompt(event.context),
+        messages
+      );
 
-  if (!reply) {
-    return {
-      success: false,
-      code: "EMPTY_REPLY",
-      message: "AI service returned an empty reply.",
-    };
+      if (!reply) {
+        return {
+          success: false,
+          code: "EMPTY_REPLY",
+          message: "AI 分析返回空结果",
+        };
+      }
+
+      return {
+        success: true,
+        reply,
+        model: MODEL,
+      };
+    } catch (error) {
+      console.error("[aiCoach] analyzeMeal failed:", error);
+      return {
+        success: false,
+        code: "AI_ERROR",
+        message: error.message || "AI 服务调用失败",
+      };
+    }
+  }
+
+  // 对话聊天
+  if (event.action === "chat") {
+    const messages = sanitizeMessages(event.messages);
+    if (!messages.length || messages[messages.length - 1].role !== "user") {
+      return {
+        success: false,
+        code: "INVALID_MESSAGES",
+        message: "The latest message must be from the user.",
+      };
+    }
+
+    try {
+      const reply = await callAI(
+        buildSystemPrompt(event.context),
+        messages
+      );
+
+      if (!reply) {
+        return {
+          success: false,
+          code: "EMPTY_REPLY",
+          message: "AI service returned an empty reply.",
+        };
+      }
+
+      return {
+        success: true,
+        reply,
+        model: MODEL,
+        usage: null,
+      };
+    } catch (error) {
+      console.error("[aiCoach] chat failed:", error);
+      return {
+        success: false,
+        code: "AI_ERROR",
+        message: error.message || "AI 服务调用失败",
+      };
+    }
   }
 
   return {
-    success: true,
-    reply,
-    model: response.model || DEFAULT_MODEL,
-    usage: response.usage || null,
+    success: false,
+    code: "UNSUPPORTED_ACTION",
+    message: "Unsupported action",
   };
 };

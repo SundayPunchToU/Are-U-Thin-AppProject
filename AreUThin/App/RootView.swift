@@ -15,29 +15,30 @@ struct RootView: View {
 }
 
 private struct MainTabView: View {
+    @EnvironmentObject private var store: AppStore
+
     var body: some View {
-        TabView {
+        TabView(selection: $store.selectedTab) {
             DashboardView()
+                .tag(AppTab.home)
                 .tabItem {
-                    Label("首页", systemImage: "house.fill")
+                    Label("今日", systemImage: "house.fill")
                 }
 
             MealRecordView()
+                .tag(AppTab.log)
                 .tabItem {
-                    Label("记录", systemImage: "camera.aperture")
+                    Label("记录", systemImage: "plus.circle.fill")
                 }
 
             TrendView()
+                .tag(AppTab.trends)
                 .tabItem {
-                    Label("趋势", systemImage: "chart.xyaxis.line")
-                }
-
-            CoachView()
-                .tabItem {
-                    Label("营养师", systemImage: "message.fill")
+                    Label("趋势", systemImage: "chart.line.uptrend.xyaxis")
                 }
 
             ProfileView()
+                .tag(AppTab.profile)
                 .tabItem {
                     Label("我的", systemImage: "person.crop.circle.fill")
                 }

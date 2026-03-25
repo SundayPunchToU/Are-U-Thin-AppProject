@@ -1,13 +1,14 @@
 {
-  "name": "aiCoach",
+  "name": "dietData",
   "version": "1.0.0",
-  "description": "AI diet coach cloud function using CloudBase AI",
+  "description": "CloudBase business data function for Are U Thin mini program",
   "main": "index.js",
   "scripts": {
     "test": "echo \"No tests configured\""
   },
   "license": "ISC",
   "dependencies": {
-    "wx-server-sdk": "~2.6.0"
+    "wx-server-sdk": "~2.4.0"
   }
 }
+

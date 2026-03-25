@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/onboarding/index",
     "pages/dashboard/index",
     "pages/record/index",
@@ -24,7 +25,7 @@
     "list": [
       {
         "pagePath": "pages/dashboard/index",
-        "text": "首页"
+        "text": "今日"
       },
       {
         "pagePath": "pages/record/index",
@@ -33,10 +34,6 @@
       {
         "pagePath": "pages/trend/index",
         "text": "趋势"
-      },
-      {
-        "pagePath": "pages/coach/index",
-        "text": "营养师"
       },
       {
         "pagePath": "pages/profile/index",

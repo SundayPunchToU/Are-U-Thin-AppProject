@@ -2,6 +2,49 @@
   height: 100vh;
 }
 
+.trend-header-copy {
+  max-width: 88%;
+  padding-top: 4rpx;
+}
+
+.summary-calorie {
+  display: block;
+  margin-top: 18rpx;
+  font-size: 44rpx;
+  color: #28282e;
+}
+
+.summary-copy {
+  display: block;
+  margin-top: 12rpx;
+}
+
+.meal-status-wrap {
+  margin-top: 18rpx;
+}
+
+.meal-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 12rpx;
+}
+
+.meal-status-chip {
+  margin-right: 14rpx;
+  margin-bottom: 14rpx;
+  padding: 12rpx 18rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.72);
+  font-size: 24rpx;
+  color: #8b909b;
+}
+
+.meal-status-chip-active {
+  background: rgba(250, 114, 93, 0.14);
+  color: #fa725d;
+  font-weight: 600;
+}
+
 .chart-wrap {
   display: flex;
   align-items: flex-end;
@@ -31,52 +74,25 @@
   border-radius: 16rpx;
 }
 
-.badge-row {
-  display: flex;
-  align-items: center;
-  margin-top: 24rpx;
+.chart-label {
+  margin-top: 8rpx;
 }
 
-.badge-emoji {
-  width: 60rpx;
-  font-size: 42rpx;
-}
-
-.badge-copy {
-  flex: 1;
-  margin-left: 10rpx;
-}
-
-.badge-title {
+.empty-state {
   display: block;
-  margin-bottom: 4rpx;
-  font-size: 28rpx;
-  color: #28282e;
+  margin-top: 18rpx;
 }
 
-.badge-unlocked {
-  font-size: 24rpx;
-  color: #69b8a3;
-}
-
-.badge-progress {
-  width: 148rpx;
-  height: 14rpx;
-  border-radius: 999rpx;
-  background: rgba(116, 120, 132, 0.12);
-  overflow: hidden;
-}
-
-.badge-progress-fill {
-  height: 100%;
-  border-radius: 999rpx;
-  background: #fabc5f;
-}
-
-.poster-pill {
-  margin-top: 20rpx;
+.record-pill {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   align-self: flex-start;
+  margin-top: 20rpx;
+  padding: 18rpx 28rpx;
+  border-radius: 999rpx;
   background: #fa725d;
   color: #ffffff;
+  font-size: 26rpx;
+  font-weight: 600;
 }

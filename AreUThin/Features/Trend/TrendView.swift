@@ -3,16 +3,18 @@ import SwiftUI
 struct TrendView: View {
     @EnvironmentObject private var store: AppStore
 
+    private var trend: [DayTrend] { store.weeklyCalorieTrend }
+    private var hasTrendData: Bool { trend.contains { $0.calories > 0 } }
+
     var body: some View {
         NavigationStack {
             ZStack {
                 AppBackground()
-
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 14) {
                         titleBar
+                        summaryCard
                         chartCard
-                        badgeCard
                         weeklyInsightCard
                     }
                     .padding(16)
@@ -25,14 +27,28 @@ struct TrendView: View {
 
     private var titleBar: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Weekly Insights")
+            Text("这一周的节奏")
                 .font(.appDisplay(30))
                 .foregroundStyle(AppTheme.ink)
-            Text("连续 \(store.streakDays) 天保持记录")
+            Text("连续 \(store.streakDays) 天有记录，慢慢看清身体反馈。")
                 .font(.appBody(14))
                 .foregroundStyle(AppTheme.softGray)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var summaryCard: some View {
+        SoftCard {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("本周概览")
+                    .font(.appTitle(17))
+                Text("周均 \(store.weeklyAverageCalories) kcal / 天")
+                    .font(.appMono(26))
+                Text(store.userProfile?.goal.supportiveSubtitle ?? "先设定目标，再开始记录你的饮食节奏。")
+                    .font(.appBody(14))
+                    .foregroundStyle(AppTheme.softGray)
+            }
+        }
     }
 
     private var chartCard: some View {
@@ -40,61 +56,28 @@ struct TrendView: View {
             VStack(alignment: .leading, spacing: 12) {
                 Text("本周热量趋势")
                     .font(.appTitle(17))
-
-                HStack(alignment: .bottom, spacing: 10) {
-                    ForEach(store.weeklyTrend) { day in
-                        let ratio = max(0.15, min(1, Double(day.calories) / Double(max(day.target, 1))))
-                        VStack(spacing: 6) {
-                            RoundedRectangle(cornerRadius: 7, style: .continuous)
-                                .fill(day.calories <= day.target ? AppTheme.mint : AppTheme.coral)
-                                .frame(width: 24, height: 120 * ratio)
-                            Text(day.label)
-                                .font(.appMono(10))
-                                .foregroundStyle(AppTheme.softGray)
+                if hasTrendData {
+                    HStack(alignment: .bottom, spacing: 10) {
+                        ForEach(trend) { day in
+                            let ratio = max(0.14, min(1, Double(day.calories) / Double(max(day.target, 1))))
+                            VStack(spacing: 6) {
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .fill(day.calories <= day.target ? AppTheme.mint : AppTheme.coral.opacity(0.85))
+                                    .frame(width: 26, height: 122 * ratio)
+                                Text(day.label)
+                                    .font(.appMono(10))
+                                    .foregroundStyle(AppTheme.softGray)
+                            }
                         }
                     }
-                }
-                .frame(maxWidth: .infinity, minHeight: 138, alignment: .bottom)
-
-                Text("绿色表示达标，红色表示超配额")
-                    .font(.appBody(12))
-                    .foregroundStyle(AppTheme.softGray)
-            }
-        }
-    }
-
-    private var badgeCard: some View {
-        SoftCard {
-            VStack(alignment: .leading, spacing: 12) {
-                Text("成就徽章")
-                    .font(.appTitle(17))
-
-                ForEach(store.badges) { badge in
-                    HStack(spacing: 10) {
-                        Text(badge.emoji)
-                            .font(.system(size: 24))
-                            .frame(width: 36)
-
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(badge.title)
-                                .font(.appBody(14))
-                            Text(badge.subtitle)
-                                .font(.appMono(11))
-                                .foregroundStyle(AppTheme.softGray)
-                        }
-
-                        Spacer()
-
-                        if badge.unlocked {
-                            Text("已解锁")
-                                .font(.appBody(12))
-                                .foregroundStyle(AppTheme.mint)
-                        } else {
-                            ProgressView(value: badge.progress)
-                                .tint(AppTheme.amber)
-                                .frame(width: 74)
-                        }
-                    }
+                    .frame(maxWidth: .infinity, minHeight: 138, alignment: .bottom)
+                    Text("浅绿色表示更接近建议范围，珊瑚色表示这天吃得更丰盛一点。")
+                        .font(.appBody(12))
+                        .foregroundStyle(AppTheme.softGray)
+                } else {
+                    Text("还没有足够的数据形成趋势，先去记录今天的第一餐吧。")
+                        .font(.appBody(14))
+                        .foregroundStyle(AppTheme.softGray)
                 }
             }
         }
@@ -103,14 +86,14 @@ struct TrendView: View {
     private var weeklyInsightCard: some View {
         SoftCard {
             VStack(alignment: .leading, spacing: 10) {
-                Text("本周总结")
+                Text("温和提醒")
                     .font(.appTitle(17))
-
-                Text("你的周均热量低于目标约 6%，控制相对稳定。建议下周保持工作日晚餐的蔬菜比例，周末提前准备低卡零食。")
+                Text(store.weeklyInsight)
                     .font(.appBody(14))
                     .foregroundStyle(AppTheme.softGray)
-
-                PillButton(title: "生成打卡海报", icon: "sparkles.rectangle.stack") {}
+                PillButton(title: "去记录一餐", icon: "camera.fill", tint: AppTheme.coral) {
+                    store.selectedTab = .log
+                }
             }
         }
     }

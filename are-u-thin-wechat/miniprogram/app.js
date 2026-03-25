@@ -3,7 +3,7 @@ const store = require("./utils/store");
 App({
   onLaunch() {
     this.globalData = {
-      env: "",
+      env: "cloud1-5g7efswaf4780b4c",
       store,
     };
 

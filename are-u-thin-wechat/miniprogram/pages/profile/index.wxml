@@ -1,45 +1,77 @@
 <scroll-view class="profile-scroll" scroll-y="true">
-  <view class="screen page-gap">
+  <view class="screen page-gap" style="padding-top: {{pageTopInset}}px;">
     <view class="profile-header">
-      <view class="profile-avatar gradient-avatar">L</view>
-      <view class="profile-copy">
-        <text class="profile-name">{{profile.nickname}}</text>
-        <text class="hero-subtitle">饮食管理进行中</text>
+      <view class="profile-avatar gradient-avatar">
+        <image wx:if="{{profile.avatarUrl}}" class="profile-avatar-image" src="{{profile.avatarUrl}}" mode="aspectFill"></image>
+        <text wx:else>{{goal.emoji}}</text>
+      </view>
+      <view class="profile-copy header-copy profile-header-copy">
+        <text class="profile-name">{{profile.nickname || '你的节奏档案'}}</text>
+        <text class="hero-subtitle">{{goal.supportiveTitle}}</text>
       </view>
     </view>
 
     <view class="soft-card">
-      <text class="section-title">当前计划</text>
-      <text class="plan-goal">{{goalLabel}}</text>
-      <text class="mono-text">日热量目标 {{dailyCalorieTarget}} kcal</text>
-      <text class="body-text">{{macroPlanText}}</text>
+      <text class="section-title">当前目标</text>
+      <text class="body-text profile-description">{{goal.supportiveSubtitle}}</text>
+      <text wx:if="{{loading}}" class="body-text status-text">正在同步档案...</text>
+      <text wx:if="{{errorText}}" class="error-text">{{errorText}}</text>
+      <view class="goal-switcher">
+        <view
+          wx:for="{{goalOptions}}"
+          wx:key="value"
+          class="goal-chip {{goal.value === item.value ? 'goal-chip-active' : ''}}"
+          data-goal="{{item.value}}"
+          bindtap="chooseGoal"
+        >
+          <text class="goal-chip-text {{goal.value === item.value ? 'goal-chip-text-active' : ''}}">{{item.emoji}} {{item.label}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="soft-card">
+      <text class="section-title">每日建议</text>
+      <text class="plan-goal">{{metrics.dailyCalorieTarget}} kcal / 天</text>
+      <text class="body-text">蛋白 {{metrics.proteinTarget}}g · 碳水 {{metrics.carbTarget}}g · 脂肪 {{metrics.fatTarget}}g</text>
+      <text class="body-text profile-description">这些数值会跟着目标自动调整，用来帮助你更温和地把握每天节奏。</text>
+    </view>
+
+    <view class="soft-card">
+      <text class="section-title">最近状态</text>
+      <view class="rhythm-row">
+        <view class="rhythm-stat">
+          <text class="rhythm-label">连续记录</text>
+          <text class="rhythm-value">{{streakDays}} 天</text>
+        </view>
+        <view class="rhythm-stat">
+          <text class="rhythm-label">今天已记</text>
+          <text class="rhythm-value">{{todayMeals.length}} 餐</text>
+        </view>
+        <view class="rhythm-stat">
+          <text class="rhythm-label">今日摄入</text>
+          <text class="rhythm-value">{{todaySummary.calories}} kcal</text>
+        </view>
+      </view>
+      <text class="body-text profile-description">当前页面已优先接入真实云端档案 / 今日数据；Coach 对话历史与餐食分析预览仍保留本地 mock。</text>
+      <view class="shortcut-row">
+        <button class="shortcut-pill shortcut-pill-coral" bindtap="goRecord">去记录一餐</button>
+        <button class="shortcut-pill shortcut-pill-mint" bindtap="goDashboard">查看今日概览</button>
+      </view>
     </view>
 
     <view class="soft-card">
       <text class="section-title">功能设置</text>
-
       <view class="setting-row">
         <text class="setting-label">晚间达标提醒</text>
         <switch color="#FA725D" checked="{{settings.reminderAtNight}}" data-key="reminderAtNight" bindchange="handleSettingChange" />
       </view>
-
       <view class="setting-row">
         <text class="setting-label">语音补充增强</text>
         <switch color="#FA725D" checked="{{settings.useVoiceEnhancement}}" data-key="useVoiceEnhancement" bindchange="handleSettingChange" />
       </view>
-
       <view class="setting-row">
         <text class="setting-label">自动生成分享海报</text>
         <switch color="#FA725D" checked="{{settings.socialPosterEnabled}}" data-key="socialPosterEnabled" bindchange="handleSettingChange" />
-      </view>
-    </view>
-
-    <view class="soft-card">
-      <text class="section-title">Pro 会员</text>
-      <text class="body-text">解锁无限识别、深度营养追踪和一周备餐建议</text>
-      <view class="pro-actions">
-        <view class="price-pill price-pill-amber">👑 19.9 元/月</view>
-        <view class="price-pill price-pill-coral">✦ 198 元/年</view>
       </view>
     </view>
   </view>

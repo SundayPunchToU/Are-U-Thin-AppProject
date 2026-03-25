@@ -1,6 +1,13 @@
 import Foundation
 import SwiftUI
 
+enum AppTab: Hashable {
+    case home
+    case log
+    case trends
+    case profile
+}
+
 struct StoryProfile: Identifiable {
     let id = UUID()
     let name: String

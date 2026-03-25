@@ -45,17 +45,24 @@ button::after {
 }
 
 .hero-title {
+  display: block;
   font-size: 60rpx;
-  line-height: 1.1;
+  line-height: 1.14;
   font-weight: 700;
   color: #28282e;
 }
 
 .hero-subtitle {
-  margin-top: 10rpx;
+  display: block;
+  margin-top: 12rpx;
   font-size: 28rpx;
-  line-height: 1.5;
+  line-height: 1.46;
   color: #747884;
+}
+
+.header-copy {
+  flex: 1;
+  min-width: 0;
 }
 
 .soft-card {
@@ -77,6 +84,18 @@ button::after {
   font-size: 28rpx;
   line-height: 1.6;
   color: #747884;
+}
+
+.status-text {
+  display: block;
+  margin-top: 16rpx;
+  color: #69b8a3;
+}
+
+.error-text {
+  display: block;
+  margin-top: 16rpx;
+  color: #e96b5b;
 }
 
 .mono-text {

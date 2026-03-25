@@ -1,6 +1,6 @@
-<view class="coach-screen">
+<view class="coach-screen" style="padding-top: {{pageTopInset}}px;">
   <view class="coach-header">
-    <view>
+    <view class="header-copy coach-header-copy">
       <text class="hero-title">AI Diet Coach</text>
       <text class="hero-subtitle">支持多轮追问与温和反馈</text>
     </view>

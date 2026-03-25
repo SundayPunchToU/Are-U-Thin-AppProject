@@ -1,29 +1,79 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="title">快速了解云开发</view>
-  <view class="top_tip">免鉴权接口调用 免部署后台 高并发</view>
-  <view class="power" wx:key="title" wx:for="{{powerList}}" wx:for-item="power">
-    <view class="power_info" data-index="{{index}}" data-type="{{ power.type }}" bindtap="onClickPowerInfo">
-      <view class="power_info_text">
-        <view class="power_info_text_title">
-          {{power.title}}
-          <view class="power_info_text_tag" wx:if="{{power.tag}}">{{power.tag}}</view>
-        </view>
-        <view class="power_info_text_tip">{{power.tip}}</view>
-      </view>
-      <image wx:if="{{!power.showItem && power.item.length}}" class="power_info_more" src="../../images/arrow.svg"></image>
-      <image wx:if="{{power.showItem && power.item.length}}" class="power_info_less" src="../../images/arrow.svg"></image>
-      <image wx:if="{{!power.item.length}}" class="power_item_icon" src="../../images/arrow.svg"></image>
+<view class="login-page" style="padding-top: {{pageTopInset}}px;">
+  <!-- 品牌区域 -->
+  <view class="brand-section">
+    <view class="brand-avatar">
+      <image wx:if="{{avatarUrl}}" class="avatar-image" src="{{avatarUrl}}" mode="aspectFill"></image>
+      <text wx:else class="avatar-text">瘦</text>
     </view>
-    <view wx:if="{{power.showItem}}">
-      <view wx:key="title" wx:for="{{power.item}}">
-        <view class="line"></view>
-        <view class="power_item" bindtap="jumpPage" data-type="{{ item.type }}" data-page="{{item.page}}">
-          <view class="power_item_title">{{item.title}}</view>
-          <image class="power_item_icon" src="../../images/arrow.svg"></image>
+    <text class="brand-title">Are U Thin</text>
+    <text class="brand-tagline">你的智能饮食管理助手</text>
+  </view>
+
+  <!-- 登录卡片 -->
+  <view class="login-card">
+    <text class="card-title">开始使用</text>
+    
+    <!-- 头像选择 -->
+    <view class="avatar-section">
+      <button
+        wx:if="{{canChooseAvatar}}"
+        class="avatar-button"
+        open-type="chooseAvatar"
+        bindchooseavatar="handleChooseAvatar"
+      >
+        <image wx:if="{{avatarUrl}}" class="user-avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
+        <view wx:else class="avatar-placeholder">
+          <text class="placeholder-icon">+</text>
+          <text class="placeholder-text">添加头像</text>
         </view>
+      </button>
+      <view wx:else class="avatar-button avatar-fallback">
+        <image wx:if="{{avatarUrl}}" class="user-avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
+        <view wx:else class="avatar-placeholder">
+          <text class="placeholder-text">真机可选</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 昵称输入 -->
+    <view class="input-section">
+      <input
+        class="nickname-input"
+        type="nickname"
+        placeholder="请输入你的昵称"
+        value="{{nickname}}"
+        bindinput="handleNicknameInput"
+      />
+    </view>
+
+    <!-- 功能说明 -->
+    <view class="features">
+      <view class="feature-item">
+        <text class="feature-dot"></text>
+        <text class="feature-text">同步你的饮食记录和目标</text>
+      </view>
+      <view class="feature-item">
+        <text class="feature-dot"></text>
+        <text class="feature-text">获取个性化的饮食建议</text>
+      </view>
+      <view class="feature-item">
+        <text class="feature-dot"></text>
+        <text class="feature-text">追踪你的健康趋势</text>
       </view>
     </view>
   </view>
-  <cloud-tip-modal showTipProps="{{showTip}}" title="{{title}}" content="{{content}}"></cloud-tip-modal>
+
+  <!-- 登录按钮 -->
+  <button 
+    class="login-button {{submitting || checking ? 'loading' : ''}}" 
+    disabled="{{submitting || checking}}" 
+    bindtap="handleLogin"
+  >
+    <text wx:if="{{checking}}">检查状态...</text>
+    <text wx:elif="{{submitting}}">登录中...</text>
+    <text wx:else>微信登录</text>
+  </button>
+
+  <!-- 错误提示 -->
+  <text wx:if="{{errorText}}" class="error-message">{{errorText}}</text>
 </view>

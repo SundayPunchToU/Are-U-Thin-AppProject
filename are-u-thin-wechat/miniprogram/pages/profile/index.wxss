@@ -4,28 +4,76 @@
 
 .profile-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .profile-avatar {
+  flex-shrink: 0;
   width: 128rpx;
   height: 128rpx;
+  margin-top: 4rpx;
   border-radius: 64rpx;
   font-size: 54rpx;
   font-weight: 700;
   box-shadow: 0 20rpx 36rpx rgba(250, 114, 93, 0.22);
 }
 
+.profile-avatar-image {
+  width: 100%;
+  height: 100%;
+}
+
 .profile-copy {
   margin-left: 22rpx;
 }
 
+.profile-header-copy {
+  padding-top: 10rpx;
+}
+
 .profile-name {
   display: block;
-  margin-bottom: 8rpx;
+  margin-bottom: 10rpx;
   font-size: 42rpx;
+  line-height: 1.18;
   font-weight: 600;
   color: #28282e;
+}
+
+.profile-description {
+  display: block;
+  margin-top: 12rpx;
+}
+
+.goal-switcher {
+  display: flex;
+  margin-top: 18rpx;
+}
+
+.goal-chip {
+  flex: 1;
+  margin-right: 12rpx;
+  padding: 18rpx 10rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.82);
+  text-align: center;
+}
+
+.goal-chip:last-child {
+  margin-right: 0;
+}
+
+.goal-chip-active {
+  background: #fa725d;
+}
+
+.goal-chip-text {
+  font-size: 24rpx;
+  color: #28282e;
+}
+
+.goal-chip-text-active {
+  color: #ffffff;
 }
 
 .plan-goal {
@@ -35,6 +83,58 @@
   font-size: 48rpx;
   line-height: 1.2;
   color: #28282e;
+}
+
+.rhythm-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18rpx;
+}
+
+.rhythm-stat {
+  flex: 1;
+}
+
+.rhythm-label {
+  display: block;
+  font-size: 24rpx;
+  color: #747884;
+}
+
+.rhythm-value {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #28282e;
+}
+
+.shortcut-row {
+  display: flex;
+  margin-top: 20rpx;
+}
+
+.shortcut-pill {
+  flex: 1;
+  margin-right: 12rpx;
+  padding: 20rpx 18rpx;
+  border-radius: 999rpx;
+  color: #ffffff;
+  font-size: 26rpx;
+  font-weight: 600;
+  text-align: center;
+}
+
+.shortcut-pill:last-child {
+  margin-right: 0;
+}
+
+.shortcut-pill-coral {
+  background: #fa725d;
+}
+
+.shortcut-pill-mint {
+  background: #69b8a3;
 }
 
 .setting-row {
@@ -47,28 +147,4 @@
 .setting-label {
   font-size: 30rpx;
   color: #28282e;
-}
-
-.pro-actions {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 22rpx;
-}
-
-.price-pill {
-  margin-right: 16rpx;
-  margin-bottom: 12rpx;
-  padding: 18rpx 28rpx;
-  border-radius: 999rpx;
-  color: #ffffff;
-  font-size: 26rpx;
-  font-weight: 600;
-}
-
-.price-pill-amber {
-  background: #fabc5f;
-}
-
-.price-pill-coral {
-  background: #fa725d;
 }

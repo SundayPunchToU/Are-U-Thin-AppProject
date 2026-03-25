@@ -33,3 +33,27 @@ sh uploadCloudFunction.sh
 ```
 
 脚本现在会同时部署 `quickstartFunctions` 和 `aiCoach`。
+
+## 已部署的后端资源
+
+**CloudBase 环境信息：**
+- 环境ID: `cloud1-5g7efswaf4780b4c`
+- 区域: `ap-shanghai`
+- 控制台: https://tcb.cloud.tencent.com/dev?envId=cloud1-5g7efswaf4780b4c#/overview
+
+**已部署的云函数：**
+
+| 函数名 | 运行时 | 超时时间 | 用途 |
+|--------|--------|----------|------|
+| `dietData` | Nodejs18.15 | 30s | 核心业务数据服务（用户、档案、餐食、趋势等） |
+| `aiCoach` | Nodejs18.15 | 60s | AI 营养师问答服务 |
+| `quickstartFunctions` | Nodejs18.15 | 30s | 示例模板函数 |
+
+**数据库集合：**
+- `users` - 用户信息
+- `profiles` - 用户健康画像
+- `meal_records` - 餐食记录
+- `daily_summaries` - 每日汇总
+
+**云函数管理入口：**
+- 云函数列表: https://tcb.cloud.tencent.com/dev?envId=cloud1-5g7efswaf4780b4c#/scf

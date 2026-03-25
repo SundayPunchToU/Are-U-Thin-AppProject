@@ -1,4 +1,5 @@
 const store = require("../../utils/store");
+const layout = require("../../utils/layout");
 
 Page({
   data: {
@@ -9,19 +10,18 @@ Page({
     isLoading: false,
     errorText: "",
     agentMode: "cloud",
+    pageTopInset: layout.getPageTopInset(),
   },
 
-  onShow() {
-    if (!store.getProfile()) {
-      wx.reLaunch({
-        url: "/pages/onboarding/index",
-      });
+  async onShow() {
+    const access = await store.ensurePageAccess();
+    if (access.redirectTo) {
+      if (access.redirectTo === "/pages/index/index") {
+        wx.reLaunch({ url: access.redirectTo });
+      } else {
+        wx.redirectTo({ url: access.redirectTo });
+      }
       return;
-    }
-
-    const tabBar = this.getTabBar && this.getTabBar();
-    if (tabBar) {
-      tabBar.setData({ selected: 3 });
     }
 
     this.syncMessages();

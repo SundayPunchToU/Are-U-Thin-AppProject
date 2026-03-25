@@ -1,32 +1,51 @@
 <scroll-view class="record-scroll" scroll-y="true">
-  <view class="screen page-gap">
-    <view class="dashboard-header">
-      <view>
-        <text class="hero-title">Meal Capture</text>
-        <text class="hero-subtitle">拍照 + 语音补充，2 秒得到反馈</text>
+  <view class="screen page-gap" style="padding-top: {{pageTopInset}}px;">
+    <view class="record-header">
+      <view class="header-copy">
+        <text class="hero-title">记录这一餐</text>
+        <text class="hero-subtitle">按 3 步完成：拍照 → 语音补充 → 确认保存</text>
       </view>
-      <view class="dashboard-badge gradient-avatar">
+      <view class="record-badge gradient-avatar">
         <text class="dashboard-badge-text">📷</text>
       </view>
     </view>
 
+    <view class="soft-card step-card">
+      <view class="step-row">
+        <view class="step-item">
+          <view class="step-dot {{currentStep >= 1 ? 'step-dot-active' : ''}}"><text class="step-dot-text">1</text></view>
+          <text class="step-label">拍照</text>
+        </view>
+        <view class="step-line {{currentStep >= 2 ? 'step-line-active' : ''}}"></view>
+        <view class="step-item">
+          <view class="step-dot {{currentStep >= 2 ? 'step-dot-active' : ''}}"><text class="step-dot-text">2</text></view>
+          <text class="step-label">补充</text>
+        </view>
+        <view class="step-line {{currentStep >= 3 ? 'step-line-active' : ''}}"></view>
+        <view class="step-item">
+          <view class="step-dot {{currentStep >= 3 ? 'step-dot-active' : ''}}"><text class="step-dot-text">3</text></view>
+          <text class="step-label">确认</text>
+        </view>
+      </view>
+    </view>
+
     <view class="soft-card">
-      <text class="section-title">餐食图片</text>
+      <text class="section-title">1. 上传餐食图片</text>
       <view class="upload-panel {{imagePath ? 'upload-panel-filled' : ''}}" bindtap="chooseImage">
         <image wx:if="{{imagePath}}" class="upload-image" src="{{imagePath}}" mode="aspectFill"></image>
         <view wx:else class="upload-placeholder">
           <text class="upload-icon">🖼️</text>
-          <text class="body-text">添加你这餐的照片</text>
+          <text class="body-text">先添加照片，AI 才能更好理解这餐内容</text>
         </view>
       </view>
-      <button class="secondary-pill" bindtap="chooseImage">从相册选择</button>
+      <button class="secondary-pill" bindtap="chooseImage">{{imagePath ? '更换照片' : '从相册选择'}}</button>
     </view>
 
     <view class="soft-card">
-      <text class="section-title">语音补充</text>
+      <text class="section-title">2. 语音补充（当前用文字 mock）</text>
       <textarea
         class="note-area"
-        placeholder="例如：牛肉约100g，米饭半碗，零度可乐"
+        placeholder="例如：牛肉约100g，米饭半碗，少油"
         placeholder-class="note-placeholder"
         value="{{voiceNote}}"
         maxlength="200"
@@ -39,27 +58,73 @@
           </view>
         </view>
       </scroll-view>
+
+      <view class="meal-type-section">
+        <text class="analysis-group-title">这餐属于</text>
+        <view class="meal-type-row">
+          <view
+            wx:for="{{mealTypeOptions}}"
+            wx:key="value"
+            class="meal-type-pill {{selectedMealType === item.value ? 'meal-type-pill-active' : ''}}"
+            data-value="{{item.value}}"
+            bindtap="handleMealTypeSelect"
+          >
+            {{item.label}}
+          </view>
+        </view>
+      </view>
     </view>
 
     <view class="soft-card">
-      <button class="primary-button {{(!voiceNote || isLoading) ? 'disabled' : ''}}" disabled="{{!voiceNote || isLoading}}" bindtap="analyzeMeal">
-        {{isLoading ? '识别中...' : 'AI 解析并记录'}}
+      <text class="section-title">3. 确认 AI 分析</text>
+      <button class="primary-button {{(!imagePath || !voiceNote || isLoading) ? 'disabled' : ''}}" disabled="{{!imagePath || !voiceNote || isLoading}}" bindtap="analyzePreview">
+        {{isLoading ? '分析中...' : '生成本餐分析'}}
       </button>
       <text wx:if="{{progressText}}" class="body-text status-text">{{progressText}}</text>
       <text wx:if="{{errorText}}" class="error-text">{{errorText}}</text>
 
-      <view wx:if="{{lastAnalysis}}" class="analysis-card">
-        <text class="analysis-title">{{lastAnalysis.guessedName}}</text>
-        <text class="mono-text">{{lastAnalysis.nutrition.calories}} kcal · P{{lastAnalysis.nutrition.protein}} C{{lastAnalysis.nutrition.carbs}} F{{lastAnalysis.nutrition.fat}}</text>
-        <text class="body-text">{{lastAnalysis.suggestion}}</text>
+      <view wx:if="{{previewResult}}" class="analysis-card">
+        <view class="analysis-head">
+          <text class="analysis-title">{{previewResult.guessedMealName}}</text>
+        </view>
+        <view class="analysis-badges">
+          <text class="meal-type-badge meal-type-badge-active">{{selectedMealTypeLabel}}</text>
+        </view>
+        <text class="body-text analysis-score">{{previewResult.scoreTitle}}</text>
+        <text wx:if="{{!previewResult.needsMoreInfo}}" class="mono-text analysis-macro">{{previewResult.nutrition.calories}} kcal · P{{previewResult.nutrition.protein}} C{{previewResult.nutrition.carbs}} F{{previewResult.nutrition.fat}}</text>
+        <text wx:if="{{previewResult.needsMoreInfo}}" class="body-text analysis-emphasis">这次我先保守一点，不急着给你不靠谱的数字。</text>
+        <text class="body-text analysis-text">{{previewResult.suggestion}}</text>
+        <view class="confidence-row">
+          <text class="confidence-icon">✓</text>
+          <text class="body-text confidence-text">{{previewResult.confidence.reason}}</text>
+        </view>
+
+        <view wx:if="{{previewResult.identifiedFoods.length}}" class="analysis-group">
+          <text class="analysis-group-title">识别到的食物</text>
+          <text wx:for="{{previewResult.identifiedFoods}}" wx:key="name" class="analysis-list-item">• {{item.name}} · {{item.estimatedPortion}} · {{item.cookingMethod}}</text>
+        </view>
+
+        <view wx:if="{{previewResult.warnings.length}}" class="analysis-group warning-group">
+          <text wx:for="{{previewResult.warnings}}" wx:key="*this" class="warning-item">⚠ {{item}}</text>
+        </view>
+
+        <view wx:if="{{previewResult.notes.length}}" class="analysis-group">
+          <text wx:for="{{previewResult.notes}}" wx:key="*this" class="analysis-note">{{item}}</text>
+        </view>
+
+        <button wx:if="{{!previewResult.needsMoreInfo}}" class="save-button {{isSaving ? 'disabled' : ''}}" disabled="{{isSaving}}" bindtap="saveMeal">{{isSaving ? '保存中...' : '确认保存到今天'}}</button>
       </view>
     </view>
 
     <view class="soft-card">
       <text class="section-title">今日记录</text>
-      <view wx:for="{{mealLogs}}" wx:key="id" class="history-item">
-        <view>
-          <text class="history-name">{{item.name}}</text>
+      <text wx:if="{{!todayMeals.length}}" class="body-text status-text">保存后会立即同步到首页和趋势页。</text>
+      <view wx:for="{{todayMeals}}" wx:key="id" class="history-item">
+        <view class="history-copy">
+          <view class="history-title-row">
+            <text class="history-name">{{item.name}}</text>
+            <text class="meal-type-badge">{{item.mealTypeLabel}}</text>
+          </view>
           <text class="body-text">{{item.scoreTitle}}</text>
         </view>
         <text class="mono-text">{{item.nutrition.calories}} kcal</text>

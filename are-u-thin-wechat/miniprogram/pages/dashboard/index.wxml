@@ -1,39 +1,39 @@
 <scroll-view class="dashboard-scroll" scroll-y="true">
-  <view class="screen page-gap">
+  <view class="screen page-gap" style="padding-top: {{pageTopInset}}px;">
     <view class="dashboard-header">
-      <view>
-        <text class="hero-title">Today, you glow</text>
-        <text class="hero-subtitle">连续打卡 {{streakDays}} 天</text>
+      <view class="header-copy">
+        <text class="hero-title">今天吃得怎么样？</text>
+        <text class="hero-subtitle">{{goalHeadline}}</text>
       </view>
       <view class="dashboard-badge gradient-avatar">
-        <text class="dashboard-badge-text">🥗</text>
+        <text class="dashboard-badge-text">{{goal.emoji}}</text>
       </view>
     </view>
 
-    <scroll-view class="story-strip" scroll-x="true" enable-flex="true">
-      <view class="story-row">
-        <view wx:for="{{storyProfiles}}" wx:key="name" class="story-item">
-          <view class="story-ring">
-            <view class="story-inner">
-              <text class="story-emoji">{{item.emoji}}</text>
-            </view>
+    <view class="soft-card dashboard-card hero-card">
+      <text class="section-title">今日目标感知</text>
+      <text class="body-text dashboard-meta">{{goal.label}} · 连续记录 {{streakDays}} 天</text>
+      <text class="goal-calorie mono-text">{{todaySummary.calories}} / {{dailyCalorieTarget}} kcal</text>
+      <view class="progress-track goal-progress">
+        <view class="progress-fill" style="width: {{calorieProgress}}%; background: #FA725D;"></view>
+      </view>
+      <text class="body-text">{{remainingText}}</text>
+      <view class="meal-status-wrap">
+        <text class="body-text meal-status-title">今日餐次</text>
+        <view class="meal-status-row">
+          <view wx:for="{{todayMealTypeStatus}}" wx:key="value" class="meal-status-chip {{item.recorded ? 'meal-status-chip-active' : ''}}">
+            {{item.label}}{{item.count ? ' · ' + item.count : ''}}
           </view>
-          <text class="story-name">{{item.name}}</text>
         </view>
       </view>
-    </scroll-view>
-
-    <view class="soft-card">
-      <text class="section-title">今日目标</text>
-      <text class="goal-calorie mono-text">{{todayGoal.current}} / {{todayGoal.target}} kcal</text>
-      <view class="progress-track goal-progress">
-        <view class="progress-fill" style="width: {{todayGoal.progress}}%; background: #FA725D;"></view>
-      </view>
-      <text class="body-text">{{latestSuggestion}}</text>
+      <text class="body-text dashboard-tip">{{latestSuggestion || goalSubtitle}}</text>
+      <text wx:if="{{errorText}}" class="error-text">{{errorText}}</text>
+      <text wx:if="{{loading}}" class="body-text status-text">正在同步今日数据...</text>
+      <button class="pill-action" bindtap="goRecord">＋ 记录新的一餐</button>
     </view>
 
-    <view class="soft-card">
-      <text class="section-title">三大营养素</text>
+    <view class="soft-card dashboard-card">
+      <text class="section-title">今日三大营养素</text>
       <view wx:for="{{macroTargets}}" wx:key="title" class="macro-item">
         <view class="macro-head">
           <text class="macro-title">{{item.title}}</text>
@@ -45,16 +45,25 @@
       </view>
     </view>
 
-    <view class="feed-section">
-      <text class="section-title feed-title">灵感 Feed</text>
-      <view wx:for="{{inspirationFeed}}" wx:key="title" class="feed-card">
-        <view class="feed-cover" style="background: linear-gradient(135deg, {{item.colors[0]}} 0%, {{item.colors[1]}} 100%);">
-          <text class="feed-badge">{{item.badge}}</text>
-        </view>
-        <text class="feed-card-title">{{item.title}}</text>
-        <text class="body-text">{{item.subtitle}}</text>
-        <text class="mono-text">≈ {{item.calories}} kcal</text>
+    <view class="soft-card dashboard-card">
+      <view class="list-header">
+        <text class="section-title">最近记录</text>
+        <text class="mono-text">{{todayMeals.length}} 餐</text>
       </view>
+      <view wx:if="{{todayMeals.length}}">
+        <view wx:for="{{todayMeals}}" wx:key="id" class="meal-item">
+          <view class="meal-copy">
+            <view class="meal-title-row">
+              <text class="meal-name">{{item.name}}</text>
+              <text class="meal-type-badge">{{item.mealTypeLabel}}</text>
+            </view>
+            <text class="body-text">{{item.scoreTitle}}</text>
+            <text wx:if="{{item.note}}" class="meal-note">{{item.note}}</text>
+          </view>
+          <text class="mono-text meal-calorie">{{item.nutrition.calories}} kcal</text>
+        </view>
+      </view>
+      <text wx:else class="body-text empty-copy">还没有记录，先拍第一餐，我们会帮你生成营养分析和温和反馈。</text>
     </view>
   </view>
 </scroll-view>
