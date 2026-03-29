@@ -1,0 +1,78 @@
+/**
+ * Swipe-to-delete WXS — 渲染层触摸手势处理，无需频繁 setData
+ */
+
+var startX = 0;
+var startY = 0;
+var moving = false;
+var openEl = null;
+var openId = "";
+var activeEl = null;
+var activeId = "";
+var DELETE_PX = 70; // 删除按钮宽度（px），约 140rpx @375
+
+function onTouchStart(e, ins) {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+  moving = false;
+
+  activeId = e.currentTarget.dataset.foodId;
+  activeEl = ins.selectComponent("#swipe-" + activeId);
+
+  // 关闭上一个已打开的（非当前）
+  if (openEl && openId && openId !== activeId) {
+    openEl.setStyle({ transform: "translateX(0px)", transition: "transform 0.25s ease-out" });
+    ins.callMethod("onSwipeChanged", { swipedId: "" });
+    openEl = null;
+    openId = "";
+  }
+}
+
+function onTouchMove(e, ins) {
+  if (!activeEl) return;
+  var dx = e.touches[0].clientX - startX;
+  var dy = e.touches[0].clientY - startY;
+
+  if (!moving) {
+    if (Math.abs(dx) < 8) return;
+    if (Math.abs(dy) > Math.abs(dx)) return;
+    moving = true;
+  }
+
+  var base = (openId === activeId) ? -DELETE_PX : 0;
+  var offset = base + dx;
+  if (offset > 0) offset = 0;
+  if (offset < -DELETE_PX) offset = -DELETE_PX;
+
+  activeEl.setStyle({ transform: "translateX(" + offset + "px)", transition: "none" });
+}
+
+function onTouchEnd(e, ins) {
+  if (!activeEl) return;
+  if (!moving) { activeEl = null; return; }
+
+  var dx = e.changedTouches[0].clientX - startX;
+  var base = (openId === activeId) ? -DELETE_PX : 0;
+  var endOffset = base + dx;
+
+  if (endOffset < -35) {
+    activeEl.setStyle({ transform: "translateX(-" + DELETE_PX + "px)", transition: "transform 0.25s ease-out" });
+    openEl = activeEl;
+    openId = activeId;
+    ins.callMethod("onSwipeChanged", { swipedId: activeId });
+  } else {
+    activeEl.setStyle({ transform: "translateX(0px)", transition: "transform 0.25s ease-out" });
+    if (openId === activeId) { openEl = null; openId = ""; }
+    ins.callMethod("onSwipeChanged", { swipedId: "" });
+  }
+
+  activeEl = null;
+  activeId = "";
+  moving = false;
+}
+
+module.exports = {
+  onTouchStart: onTouchStart,
+  onTouchMove: onTouchMove,
+  onTouchEnd: onTouchEnd,
+};

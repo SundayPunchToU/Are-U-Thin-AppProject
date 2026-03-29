@@ -1,19 +1,38 @@
 <view class="tab-shell">
   <view class="tab-bar">
+    <!-- Left tabs: 今日 / 记录 -->
     <view
       wx:for="{{list}}"
       wx:key="pagePath"
+      wx:if="{{index < 2}}"
       class="tab-item {{selected === index ? 'tab-item-active' : ''}}"
       data-path="{{item.pagePath}}"
       data-index="{{index}}"
       bindtap="switchTab"
     >
-      <text class="tab-icon" style="color: {{selected === index ? selectedColor : color}};">
-        {{item.icon}}
-      </text>
-      <text class="tab-text" style="color: {{selected === index ? selectedColor : color}};">
-        {{item.text}}
-      </text>
+      <text class="tab-icon" style="color: {{selected === index ? selectedColor : color}};">{{item.icon}}</text>
+      <text class="tab-text" style="color: {{selected === index ? selectedColor : color}};">{{item.text}}</text>
     </view>
+
+    <!-- Center: + Button -->
+    <view class="tab-center" bindtap="onCenterTap">
+      <view class="tab-center-btn">
+        <text class="tab-center-icon">＋</text>
+      </view>
+    </view>
+
+    <!-- Right tabs: 社区 / 我的 -->
+    <block wx:for="{{list}}" wx:key="pagePath" wx:for-index="idx" wx:for-item="rightItem">
+      <view
+        wx:if="{{idx >= 2}}"
+        class="tab-item {{selected === idx ? 'tab-item-active' : ''}}"
+        data-path="{{rightItem.pagePath}}"
+        data-index="{{idx}}"
+        bindtap="switchTab"
+      >
+        <text class="tab-icon" style="color: {{selected === idx ? selectedColor : color}};">{{rightItem.icon}}</text>
+        <text class="tab-text" style="color: {{selected === idx ? selectedColor : color}};">{{rightItem.text}}</text>
+      </view>
+    </block>
   </view>
 </view>

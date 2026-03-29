@@ -76,6 +76,58 @@ function buildWeeklyInsight(avg, target) {
   if (delta < 0) return "这周摄入整体偏轻一些，记得给自己留出足够能量和恢复空间。";
   return "这周比目标多一点点也没关系，下一餐回到蔬菜和蛋白质优先就好。";
 }
+
+function buildCalorieTrend(mealLogs, target, range) {
+  range = range || "week";
+  var now = new Date(); now.setHours(0, 0, 0, 0);
+  var segments = [];
+  if (range === "week") {
+    var dl = ["日", "一", "二", "三", "四", "五", "六"];
+    for (var i = 6; i >= 0; i--) { var d = new Date(now); d.setDate(d.getDate() - i); segments.push({ label: "周" + dl[d.getDay()], start: d.getTime(), end: d.getTime() + 86399999 }); }
+  } else if (range === "month") {
+    for (var w = 3; w >= 0; w--) { var wE = new Date(now); wE.setDate(wE.getDate() - w * 7); wE.setHours(23, 59, 59, 999); var wS = new Date(wE); wS.setDate(wS.getDate() - 6); wS.setHours(0, 0, 0, 0); segments.push({ label: "第" + (4 - w) + "周", start: wS.getTime(), end: wE.getTime() }); }
+  } else {
+    for (var m = 11; m >= 0; m--) { var mD = new Date(now); mD.setMonth(mD.getMonth() - m); var mS = new Date(mD.getFullYear(), mD.getMonth(), 1); var mE = new Date(mD.getFullYear(), mD.getMonth() + 1, 0, 23, 59, 59, 999); segments.push({ label: (mD.getMonth() + 1) + "月", start: mS.getTime(), end: mE.getTime() }); }
+  }
+  return segments.map(function (seg) {
+    var cal = (mealLogs || []).filter(function (item) { var t = Number(item.timestamp || 0); return t >= seg.start && t <= seg.end; }).reduce(function (s, item) { return s + Number(item.nutrition && item.nutrition.calories || 0); }, 0);
+    var days = range === "week" ? 1 : Math.max(1, Math.round((seg.end - seg.start) / 86400000) + 1);
+    var avg = range === "week" ? cal : cal / days;
+    var ratio = Math.max(0.14, Math.min(1, avg / Math.max(target || 1, 1)));
+    return { label: seg.label, calories: Math.round(avg), target: target, hitTarget: avg > 0 && avg <= target, barHeight: Math.round(ratio * 122) };
+  });
+}
+
+function buildRangeInsight(avgCal, target, range) {
+  var rl = { week: "这周", month: "这月", year: "今年" };
+  var label = rl[range] || "这段时间";
+  if (avgCal === 0) return label + "还没有记录数据，开始记录就能看到趋势变化。";
+  var d = avgCal - target;
+  if (Math.abs(d) <= 120) return label + "整体很稳，继续保持现在的记录节奏就很好。";
+  if (d < 0) return label + "摄入整体偏轻一些，记得给自己留出足够能量和恢复空间。";
+  return label + "比目标多一点点也没关系，下一餐回到蔬菜和蛋白质优先就好。";
+}
+
+function buildWeightTrendData(weightLogs, range) {
+  var now = new Date(); now.setHours(0, 0, 0, 0);
+  var st = range === "week" ? now.getTime() - 6 * 86400000 : range === "month" ? now.getTime() - 29 * 86400000 : now.getTime() - 364 * 86400000;
+  var filtered = (weightLogs || []).filter(function (l) {
+    var ts = l.date ? new Date(l.date).getTime() : Number(l.timestamp || 0);
+    return l.weight > 0 && ts >= st;
+  }).sort(function (a, b) { return String(a.date || a.timestamp).localeCompare(String(b.date || b.timestamp)); });
+  if (filtered.length > 20) {
+    var step = Math.ceil(filtered.length / 20); var sampled = [];
+    for (var i = 0; i < filtered.length; i += step) sampled.push(filtered[i]);
+    if (sampled[sampled.length - 1] !== filtered[filtered.length - 1]) sampled.push(filtered[filtered.length - 1]);
+    filtered = sampled;
+  }
+  return filtered.map(function (l) {
+    var d = new Date(l.date ? l.date : Number(l.timestamp));
+    var label = range === "year" ? (d.getMonth() + 1) + "月" : (d.getMonth() + 1) + "/" + d.getDate();
+    return { weight: l.weight, label: label, date: l.date || l.timestamp };
+  });
+}
+
 function buildAnalysis(base, request) {
   const warnings = [];
   const notes = [];
@@ -101,4 +153,4 @@ function generateCoachReply(input) {
   return "这顿不用焦虑，你已经在可控范围内。下一餐多一点蛋白和蔬菜，就能慢慢拉回平衡。";
 }
 
-module.exports = { GOAL_OPTIONS, DEFAULT_SETTINGS, getGoalOption, getMacroPlan, createDefaultProfile, calculateDailyCalorieTarget, getActivityText, buildProfileMetrics, getDefaultMealLogs, getDefaultCoachMessages, getDefaultLatestSuggestion, getTodayMeals, getTodaySummary, getStreakDays, buildMacroTargets, buildWeeklyCalorieTrend, buildWeeklyInsight, analyzeMeal, generateCoachReply };
+module.exports = { GOAL_OPTIONS, DEFAULT_SETTINGS, getGoalOption, getMacroPlan, createDefaultProfile, calculateDailyCalorieTarget, getActivityText, buildProfileMetrics, getDefaultMealLogs, getDefaultCoachMessages, getDefaultLatestSuggestion, getTodayMeals, getTodaySummary, getStreakDays, buildMacroTargets, buildWeeklyCalorieTrend, buildWeeklyInsight, buildCalorieTrend, buildRangeInsight, buildWeightTrendData, analyzeMeal, generateCoachReply };

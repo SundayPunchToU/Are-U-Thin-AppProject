@@ -1,5 +1,15 @@
+<wxs module="fmt">
+module.exports.buildRemainingText = function (remaining) {
+  if (remaining >= 0) {
+    return '距离今日建议还差 ' + remaining + ' kcal，慢慢吃也来得及。';
+  }
+  return '今天已经多摄入 ' + Math.abs(remaining) + ' kcal，下一餐清爽一点就很好。';
+};
+</wxs>
 <scroll-view class="dashboard-scroll" scroll-y="true">
   <view class="screen page-gap" style="padding-top: {{pageTopInset}}px;">
+
+    <!-- Header -->
     <view class="dashboard-header">
       <view class="header-copy">
         <text class="hero-title">今天吃得怎么样？</text>
@@ -10,6 +20,7 @@
       </view>
     </view>
 
+    <!-- Goal Card -->
     <view class="soft-card dashboard-card hero-card">
       <view class="card-head">
         <text class="section-title">今日目标感知</text>
@@ -19,24 +30,17 @@
       <view class="progress-track goal-progress">
         <view class="progress-fill" style="width: {{calorieProgress}}%; background: #FA725D;"></view>
       </view>
-      <text class="body-text dashboard-highlight">{{remainingText}}</text>
-      <view class="meal-status-wrap">
-        <text class="body-text meal-status-title">今日餐次</text>
-        <view class="meal-status-row">
-          <view wx:for="{{todayMealTypeStatus}}" wx:key="value" class="meal-status-chip {{item.recorded ? 'meal-status-chip-active' : ''}}">
-            {{item.label}}{{item.count ? ' · ' + item.count : ''}}
-          </view>
-        </view>
-      </view>
+      <text class="body-text dashboard-highlight">{{fmt.buildRemainingText(remainingCalories)}}</text>
       <text class="body-text dashboard-tip">{{latestSuggestion || goalSubtitle}}</text>
       <text wx:if="{{errorText}}" class="error-text">{{errorText}}</text>
       <text wx:if="{{loading}}" class="status-text">正在同步今日数据...</text>
       <button class="pill-action" bindtap="goRecord">＋ 记录新的一餐</button>
     </view>
 
+    <!-- Macronutrient Card -->
     <view class="soft-card dashboard-card">
       <view class="card-head">
-        <text class="section-title">今日三大营养素</text>
+        <text class="section-title">营养统计</text>
       </view>
       <view wx:for="{{macroTargets}}" wx:key="title" class="macro-item">
         <view class="macro-head">
@@ -47,27 +51,203 @@
           <view class="progress-fill" style="width: {{item.progress}}%; background: {{item.tint}};"></view>
         </view>
       </view>
+
+      <!-- Micro-nutrient Indicator Row -->
+      <view class="micro-indicator-row" bindtap="showMicroDetails">
+        <view wx:for="{{microIndicators}}" wx:key="name" class="micro-dot-wrap">
+          <view class="micro-dot micro-dot-{{item.status}}"></view>
+          <text class="micro-dot-label">{{item.name}}</text>
+        </view>
+        <text class="micro-arrow">›</text>
+      </view>
     </view>
 
+    <!-- Water Intake Card -->
     <view class="soft-card dashboard-card">
-      <view class="list-header">
-        <text class="section-title">最近记录</text>
-        <text class="mono-text">{{todayMeals.length}} 餐</text>
+      <view class="water-head">
+        <text class="section-title">今日饮水</text>
+        <text class="water-goal">目标 2000ml</text>
       </view>
-      <view wx:if="{{todayMeals.length}}" class="meal-list">
-        <view wx:for="{{todayMeals}}" wx:key="id" class="meal-item">
-          <view class="meal-copy">
-            <view class="meal-title-row">
-              <text class="meal-name">{{item.name}}</text>
-              <text class="meal-type-badge">{{item.mealTypeLabel}}</text>
-            </view>
-            <text class="body-text meal-score">{{item.scoreTitle}}</text>
-            <text wx:if="{{item.note}}" class="meal-note">{{item.note}}</text>
+      <view class="water-body">
+        <view class="water-cup-wrap">
+          <view class="water-cup-body">
+            <view class="water-fill" style="height: {{waterPercent}}%;"></view>
           </view>
-          <text class="mono-text meal-calorie">{{item.nutrition.calories}} kcal</text>
+        </view>
+        <view class="water-data">
+          <text class="water-num">{{waterCurrent}} / {{waterTarget}} ml</text>
+          <text class="water-tip">{{waterTip}}</text>
+          <view class="water-bar-bg">
+            <view class="water-bar-fg" style="width: {{waterBarWidth}}%;"></view>
+          </view>
         </view>
       </view>
-      <text wx:else class="body-text empty-copy">还没有记录，先拍第一餐，我们会帮你生成营养分析和温和反馈。</text>
+      <view class="water-btn-wrap">
+        <view class="water-btn" hover-class="water-btn-active" bindtap="handleDrinkWater">
+          <text class="water-btn-label">+ 喝一杯</text>
+        </view>
+      </view>
     </view>
+
+    <!-- Bottom Sheet: Micro-nutrient Details -->
+    <view class="micro-sheet-mask" wx:if="{{microSheetVisible}}" bindtap="hideMicroDetails">
+      <view class="micro-sheet" catchtap="stopPropagation">
+        <view class="micro-sheet-handle"></view>
+        <text class="micro-sheet-title">微量元素 & 维生素详情</text>
+        <view class="micro-detail-list">
+          <view wx:for="{{microDetails}}" wx:key="name" class="micro-detail-item">
+            <view class="micro-detail-head">
+              <view class="micro-dot micro-dot-{{item.status}}"></view>
+              <text class="micro-detail-name">{{item.name}}</text>
+              <text class="micro-detail-status micro-detail-status-{{item.status}}">{{item.statusText}}</text>
+            </view>
+            <text class="micro-detail-desc">{{item.advice}}</text>
+          </view>
+        </view>
+        <view class="micro-sheet-close" bindtap="hideMicroDetails">
+          <text class="micro-sheet-close-text">收起</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Today's Meals Card -->
+    <view class="soft-card dashboard-card">
+      <view class="list-header">
+        <text class="section-title">今日饮食记录</text>
+        <text class="mono-text meal-total-badge">{{totalMealCount}} 道菜</text>
+      </view>
+
+      <!-- Breakfast -->
+      <view class="meal-type-block" bindtap="closeSwipe">
+        <view class="meal-type-head">
+          <view class="meal-type-icon meal-type-icon-breakfast">🌅</view>
+          <text class="meal-type-label">早餐</text>
+        </view>
+        <view wx:if="{{meals.breakfast.length}}" class="food-list">
+          <view wx:for="{{meals.breakfast}}" wx:key="id" class="swipe-wrap">
+            <view class="swipe-delete" data-meal-type="breakfast" data-food-id="{{item.id}}" catchtap="deleteFood">
+              <text class="swipe-delete-text">删除</text>
+            </view>
+            <view class="swipe-body {{item.id === swipeActiveId ? 'swipe-dragging' : ''}}"
+              data-id="{{item.id}}" data-meal="breakfast"
+              catchtouchstart="onSwipeTouchStart"
+              catchtouchmove="onSwipeTouchMove"
+              catchtouchend="onSwipeTouchEnd"
+              style="transform: translateX({{item.id === swipeActiveId ? swipeOffset : (item.id === swipeOpenedId ? -deleteBtnWidth : 0)}}px)"
+            >
+              <view class="food-item">
+                <view class="food-left">
+                  <text class="food-name">{{item.name}}</text>
+                  <view class="food-tags">
+                    <text wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" class="food-tag">{{tag}}</text>
+                  </view>
+                  <text class="food-macro">蛋白{{item.protein}}g · 碳水{{item.carbs}}g · 脂肪{{item.fat}}g</text>
+                </view>
+                <text class="food-calorie mono-text">{{item.calories}} kcal</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <text wx:else class="food-empty">暂无早餐记录</text>
+      </view>
+
+      <!-- Lunch -->
+      <view class="meal-type-block" bindtap="closeSwipe">
+        <view class="meal-type-head">
+          <view class="meal-type-icon meal-type-icon-lunch">☀️</view>
+          <text class="meal-type-label">午餐</text>
+        </view>
+        <view wx:if="{{meals.lunch.length}}" class="food-list">
+          <view wx:for="{{meals.lunch}}" wx:key="id" class="swipe-wrap">
+            <view class="swipe-delete" data-meal-type="lunch" data-food-id="{{item.id}}" catchtap="deleteFood">
+              <text class="swipe-delete-text">删除</text>
+            </view>
+            <view class="swipe-body {{item.id === swipeActiveId ? 'swipe-dragging' : ''}}"
+              data-id="{{item.id}}" data-meal="lunch"
+              catchtouchstart="onSwipeTouchStart"
+              catchtouchmove="onSwipeTouchMove"
+              catchtouchend="onSwipeTouchEnd"
+              style="transform: translateX({{item.id === swipeActiveId ? swipeOffset : (item.id === swipeOpenedId ? -deleteBtnWidth : 0)}}px)"
+            >
+              <view class="food-item">
+                <view class="food-left">
+                  <text class="food-name">{{item.name}}</text>
+                  <view class="food-tags">
+                    <text wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" class="food-tag">{{tag}}</text>
+                  </view>
+                  <text class="food-macro">蛋白{{item.protein}}g · 碳水{{item.carbs}}g · 脂肪{{item.fat}}g</text>
+                </view>
+                <text class="food-calorie mono-text">{{item.calories}} kcal</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <text wx:else class="food-empty">暂无午餐记录</text>
+      </view>
+
+      <!-- Dinner -->
+      <view class="meal-type-block" bindtap="closeSwipe">
+        <view class="meal-type-head">
+          <view class="meal-type-icon meal-type-icon-dinner">🌙</view>
+          <text class="meal-type-label">晚餐</text>
+        </view>
+        <view wx:if="{{meals.dinner.length}}" class="food-list">
+          <view wx:for="{{meals.dinner}}" wx:key="id" class="swipe-wrap">
+            <view class="swipe-delete" data-meal-type="dinner" data-food-id="{{item.id}}" catchtap="deleteFood">
+              <text class="swipe-delete-text">删除</text>
+            </view>
+            <view class="swipe-body {{item.id === swipeActiveId ? 'swipe-dragging' : ''}}"
+              data-id="{{item.id}}" data-meal="dinner"
+              catchtouchstart="onSwipeTouchStart"
+              catchtouchmove="onSwipeTouchMove"
+              catchtouchend="onSwipeTouchEnd"
+              style="transform: translateX({{item.id === swipeActiveId ? swipeOffset : (item.id === swipeOpenedId ? -deleteBtnWidth : 0)}}px)"
+            >
+              <view class="food-item">
+                <view class="food-left">
+                  <text class="food-name">{{item.name}}</text>
+                  <view class="food-tags">
+                    <text wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" class="food-tag">{{tag}}</text>
+                  </view>
+                  <text class="food-macro">蛋白{{item.protein}}g · 碳水{{item.carbs}}g · 脂肪{{item.fat}}g</text>
+                </view>
+                <text class="food-calorie mono-text">{{item.calories}} kcal</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <text wx:else class="food-empty">暂无晚餐记录</text>
+      </view>
+    </view>
+
+    <!-- Meal Type Picker Sheet (after photo recognition) -->
+    <view class="picker-mask" wx:if="{{showMealTypePicker}}" bindtap="hideMealTypePicker">
+      <view class="picker-sheet" catchtap="stopPropagation">
+        <view class="picker-handle"></view>
+        <text class="picker-title">识别完成，选择餐别</text>
+        <view class="picker-food-preview" wx:if="{{pendingMealItems.length}}">
+          <text class="picker-preview-text">本次识别到 {{pendingMealItems.length}} 道菜：</text>
+          <text wx:for="{{pendingMealItems}}" wx:key="id" class="picker-preview-item">{{item.name}}</text>
+        </view>
+        <view class="picker-options">
+          <view class="picker-option" data-type="breakfast" bindtap="confirmMealType">
+            <text class="picker-option-icon">🌅</text>
+            <text class="picker-option-label">早餐</text>
+          </view>
+          <view class="picker-option" data-type="lunch" bindtap="confirmMealType">
+            <text class="picker-option-icon">☀️</text>
+            <text class="picker-option-label">午餐</text>
+          </view>
+          <view class="picker-option" data-type="dinner" bindtap="confirmMealType">
+            <text class="picker-option-icon">🌙</text>
+            <text class="picker-option-label">晚餐</text>
+          </view>
+        </view>
+        <view class="picker-cancel" bindtap="hideMealTypePicker">
+          <text class="picker-cancel-text">取消</text>
+        </view>
+      </view>
+    </view>
+
   </view>
 </scroll-view>

@@ -1,0 +1,257 @@
+/* ── Page Container ─────────────────── */
+
+.community-scroll {
+  height: 100vh;
+}
+
+.community-header {
+  max-width: 88%;
+  padding-top: 4rpx;
+}
+
+/* ── Rank Section ───────────────────── */
+
+.rank-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.rank-period-row {
+  display: flex;
+  gap: 12rpx;
+  margin-bottom: 8rpx;
+}
+
+.rank-period-btn {
+  padding: 12rpx 28rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.88);
+  font-size: 24rpx;
+  color: #737988;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+.rank-period-btn-active {
+  background: rgba(250, 114, 93, 0.14);
+  color: #fa725d;
+  font-weight: 600;
+}
+
+/* ── Podium ─────────────────────────── */
+
+.podium-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 20rpx;
+  padding: 32rpx 12rpx 24rpx;
+  margin-bottom: 16rpx;
+  border-radius: 28rpx;
+  background: linear-gradient(180deg, rgba(255, 244, 235, 0.6) 0%, rgba(255, 255, 255, 0.3) 100%);
+}
+
+.podium-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.podium-item-1 { padding-bottom: 0; }
+.podium-item-2 { padding-bottom: 12rpx; }
+.podium-item-3 { padding-bottom: 20rpx; }
+
+.podium-avatar-wrap {
+  position: relative;
+  width: 96rpx;
+  height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.podium-avatar-wrap-1 {
+  width: 108rpx;
+  height: 108rpx;
+  background: linear-gradient(135deg, rgba(250, 188, 111, 0.24), rgba(250, 188, 111, 0.08));
+}
+
+.podium-avatar {
+  font-size: 46rpx;
+}
+
+.podium-avatar-1 {
+  font-size: 52rpx;
+}
+
+.podium-crown {
+  position: absolute;
+  top: -12rpx;
+  right: -6rpx;
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  font-size: 18rpx;
+  font-weight: 700;
+  line-height: 32rpx;
+  text-align: center;
+  color: #ffffff;
+}
+
+.podium-crown-1 {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.podium-crown-2 {
+  background: linear-gradient(135deg, #9ca3af, #6b7280);
+}
+
+.podium-crown-3 {
+  background: linear-gradient(135deg, #cd7f32, #b8690e);
+}
+
+.podium-name {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #515864;
+}
+
+.podium-name-1 {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #25262c;
+}
+
+.podium-streak {
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  color: #98a0ad;
+}
+
+.podium-streak-1 {
+  color: #fa725d;
+  font-weight: 600;
+}
+
+/* ── Rank Card ──────────────────────── */
+
+.rank-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2rpx;
+}
+
+.rank-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 12rpx;
+  border-radius: 16rpx;
+  transition: background 0.15s;
+}
+
+.rank-item:not(:last-child) {
+  border-bottom: 1rpx solid rgba(242, 244, 247, 0.8);
+}
+
+.rank-item-me {
+  background: rgba(250, 114, 93, 0.06);
+  border-radius: 20rpx;
+  padding: 20rpx 16rpx;
+}
+
+.rank-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.rank-number {
+  width: 44rpx;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #98a0ad;
+  text-align: center;
+}
+
+.rank-item:nth-child(n+2):nth-child(-n+3) .rank-number {
+  color: #737988;
+}
+
+.rank-avatar {
+  font-size: 36rpx;
+}
+
+.rank-name {
+  font-size: 27rpx;
+  font-weight: 500;
+  color: #25262c;
+}
+
+.rank-item-me .rank-name {
+  font-weight: 600;
+  color: #fa725d;
+}
+
+.rank-right {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+}
+
+.rank-streak-text {
+  font-size: 22rpx;
+  color: #98a0ad;
+}
+
+.rank-calorie-tag {
+  padding: 6rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+}
+
+.rank-calorie-hit {
+  background: rgba(105, 184, 163, 0.14);
+  color: #2e8e79;
+}
+
+.rank-calorie-over {
+  background: rgba(250, 114, 93, 0.10);
+  color: #d45e4d;
+}
+
+/* ── Like Button ────────────────────── */
+
+.rank-like-btn {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 999rpx;
+  background: rgba(242, 244, 247, 0.7);
+  transition: background 0.2s;
+}
+
+.rank-like-btn-active {
+  background: rgba(250, 114, 93, 0.10);
+}
+
+.rank-like-icon {
+  font-size: 26rpx;
+  line-height: 1;
+}
+
+.rank-like-count {
+  font-size: 22rpx;
+  font-weight: 600;
+  color: #737988;
+}
+
+.rank-like-btn-active .rank-like-count {
+  color: #fa725d;
+}

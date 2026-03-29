@@ -1,0 +1,83 @@
+<scroll-view class="community-scroll" scroll-y="true">
+  <view class="screen page-gap" style="padding-top: {{pageTopInset}}px;">
+
+    <!-- Header -->
+    <view class="header-copy community-header">
+      <text class="hero-title">社区</text>
+      <text class="hero-subtitle">和朋友一起坚持，互相鼓励更持久。</text>
+    </view>
+
+    <!-- ====== 排行板块 ====== -->
+    <view class="rank-section">
+
+      <!-- Period Switch -->
+      <view class="rank-period-row">
+        <view
+          wx:for="{{rankPeriods}}"
+          wx:key="value"
+          class="rank-period-btn {{rankPeriod === item.value ? 'rank-period-btn-active' : ''}}"
+          data-value="{{item.value}}"
+          bindtap="switchRankPeriod"
+        >{{item.label}}</view>
+      </view>
+
+      <!-- Rank List -->
+      <view class="soft-card rank-card">
+        <!-- Top 3 Podium -->
+        <view class="podium-row" wx:if="{{rankList.length >= 3}}">
+          <!-- 2nd -->
+          <view class="podium-item podium-item-2">
+            <view class="podium-avatar-wrap">
+              <text class="podium-avatar">{{rankList[1].avatar}}</text>
+              <view class="podium-crown podium-crown-2">2</view>
+            </view>
+            <text class="podium-name">{{rankList[1].name}}</text>
+            <text class="podium-streak">{{rankList[1].streakDays}} 天</text>
+          </view>
+          <!-- 1st -->
+          <view class="podium-item podium-item-1">
+            <view class="podium-avatar-wrap podium-avatar-wrap-1">
+              <text class="podium-avatar podium-avatar-1">{{rankList[0].avatar}}</text>
+              <view class="podium-crown podium-crown-1">1</view>
+            </view>
+            <text class="podium-name podium-name-1">{{rankList[0].name}}</text>
+            <text class="podium-streak podium-streak-1">{{rankList[0].streakDays}} 天</text>
+          </view>
+          <!-- 3rd -->
+          <view class="podium-item podium-item-3">
+            <view class="podium-avatar-wrap">
+              <text class="podium-avatar">{{rankList[2].avatar}}</text>
+              <view class="podium-crown podium-crown-3">3</view>
+            </view>
+            <text class="podium-name">{{rankList[2].name}}</text>
+            <text class="podium-streak">{{rankList[2].streakDays}} 天</text>
+          </view>
+        </view>
+
+        <!-- Full List -->
+        <view
+          wx:for="{{rankList}}"
+          wx:key="rank"
+          class="rank-item {{item.isMe ? 'rank-item-me' : ''}}"
+        >
+          <view class="rank-left">
+            <text class="rank-number">{{item.rank}}</text>
+            <text class="rank-avatar">{{item.avatar}}</text>
+            <text class="rank-name">{{item.name}}</text>
+          </view>
+          <view class="rank-right">
+            <view class="rank-like-btn {{item.liked ? 'rank-like-btn-active' : ''}}" data-rank="{{item.rank}}" bindtap="toggleLike">
+              <text class="rank-like-icon">{{item.liked ? '❤️' : '🤍'}}</text>
+              <text class="rank-like-count">{{item.likes}}</text>
+            </view>
+            <text class="rank-streak-text">{{item.streakDays}} 天连续</text>
+            <view class="rank-calorie-tag {{item.todayCalories > 0 && item.todayCalories <= item.targetCalories ? 'rank-calorie-hit' : 'rank-calorie-over'}}">
+              {{item.todayCalories > 0 ? item.todayCalories + ' kcal' : '未记录'}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</scroll-view>

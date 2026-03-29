@@ -1,19 +1,39 @@
-.trend-scroll {
+/* ── Page Container ─────────────────── */
+
+.stats-scroll {
   height: 100vh;
 }
 
-.trend-header-copy {
+.stats-header {
   max-width: 88%;
   padding-top: 4rpx;
 }
+
+/* ── Card Layout ────────────────────── */
 
 .card-head {
   display: flex;
   flex-direction: column;
 }
 
-.card-caption {
+.card-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-divider {
+  height: 1rpx;
+  margin: 24rpx 0;
+  background: rgba(242, 244, 247, 0.8);
+}
+
+.section-subtitle {
+  display: block;
   margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #98a0ad;
+  font-weight: 500;
 }
 
 .summary-calorie {
@@ -28,33 +48,101 @@
   margin-top: 12rpx;
 }
 
-.meal-status-wrap {
+/* ── Dropdown Picker ────────────────── */
+
+.picker-trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 10rpx 20rpx;
+  border-radius: 20rpx;
+  background: rgba(250, 114, 93, 0.08);
+  z-index: 10;
+}
+
+.picker-label {
+  font-size: 24rpx;
+  color: #fa725d;
+  font-weight: 600;
+}
+
+.picker-arrow {
+  font-size: 18rpx;
+  color: #fa725d;
+}
+
+.picker-dropdown {
+  position: absolute;
+  top: calc(100% + 8rpx);
+  right: 0;
+  min-width: 160rpx;
+  border-radius: 16rpx;
+  background: #ffffff;
+  box-shadow: 0 12rpx 36rpx rgba(31, 35, 41, 0.12);
+  overflow: hidden;
+  z-index: 20;
+}
+
+.picker-dropdown-right {
+  right: 0;
+}
+
+.picker-option {
+  padding: 20rpx 28rpx;
+  font-size: 24rpx;
+  color: #737988;
+  text-align: center;
+  transition: background 0.15s;
+}
+
+.picker-option-active {
+  color: #fa725d;
+  font-weight: 600;
+  background: rgba(250, 114, 93, 0.06);
+}
+
+/* ── Overview Stats Grid ────────────── */
+
+.stats-grid {
+  display: flex;
+  gap: 16rpx;
   margin-top: 18rpx;
-  padding: 18rpx 18rpx 4rpx;
-  border-radius: 26rpx;
+}
+
+.stat-item {
+  flex: 1;
+  padding: 18rpx;
+  border-radius: 20rpx;
   background: rgba(255, 255, 255, 0.56);
 }
 
-.meal-status-row {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 12rpx;
-}
-
-.meal-status-chip {
-  margin-right: 12rpx;
-  margin-bottom: 12rpx;
-  padding: 12rpx 18rpx;
-  border-radius: 999rpx;
-  background: rgba(255, 255, 255, 0.86);
-  font-size: 24rpx;
-  color: #8b909b;
-}
-
-.meal-status-chip-active {
-  background: rgba(250, 114, 93, 0.14);
-  color: #fa725d;
+.stat-value {
+  display: block;
+  font-size: 32rpx;
   font-weight: 600;
+  color: #25262c;
+}
+
+.stat-label {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #98a0ad;
+}
+
+.stat-positive {
+  color: #69b8a3;
+}
+
+.stat-negative {
+  color: #fa725d;
+}
+
+/* ── Calorie Chart ──────────────────── */
+
+.chart-container {
+  margin-top: 4rpx;
 }
 
 .chart-wrap {
@@ -87,14 +175,38 @@
 .chart-bar {
   width: 48rpx;
   border-radius: 16rpx;
+  transition: height 0.3s ease;
 }
 
 .chart-label {
   margin-top: 10rpx;
 }
 
-.chart-note {
-  display: block;
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 32rpx;
+  margin-top: 16rpx;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.legend-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+}
+
+.legend-dot-hit {
+  background: #69b8a3;
+}
+
+.legend-dot-over {
+  background: #fa725d;
 }
 
 .empty-state {
@@ -102,7 +214,85 @@
   margin-top: 18rpx;
 }
 
-.record-pill {
+/* ── Weight Section ─────────────────── */
+
+.weight-card-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.weight-latest {
+  display: block;
+  margin-top: 8rpx;
+  color: #fa725d;
+  font-weight: 600;
+}
+
+.weight-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 320rpx;
+  margin-top: 20rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.weight-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.weight-empty {
+  padding: 28rpx 0;
+}
+
+.weight-empty-text {
+  color: #98a0ad;
+}
+
+.weight-input-section {
+  margin-top: 16rpx;
+  padding: 18rpx;
+  border-radius: 20rpx;
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.weight-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.weight-input {
+  flex: 1;
+  padding: 14rpx 18rpx;
+  border-radius: 16rpx;
+  background: rgba(255, 255, 255, 0.88);
+  font-size: 28rpx;
+  color: #25262c;
+}
+
+.weight-input-placeholder {
+  color: #b0b6c1;
+  font-size: 26rpx;
+}
+
+.weight-unit {
+  font-size: 26rpx;
+  color: #98a0ad;
+}
+
+.weight-save-btn {
+  padding: 14rpx 28rpx;
+  flex-shrink: 0;
+}
+
+/* ── Action Button ──────────────────── */
+
+.pill-action {
   display: inline-flex;
   align-items: center;
   justify-content: center;

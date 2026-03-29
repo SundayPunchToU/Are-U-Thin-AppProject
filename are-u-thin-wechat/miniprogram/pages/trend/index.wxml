@@ -1,52 +1,144 @@
-<scroll-view class="trend-scroll" scroll-y="true">
+<wxs module="fmt">
+module.exports.rangeLabel = function (range) {
+  if (range === "week") return "本周";
+  if (range === "month") return "本月";
+  return "本年";
+};
+module.exports.rangeAvgLabel = function (range) {
+  if (range === "week") return "周均";
+  if (range === "month") return "月均";
+  return "年均";
+};
+module.exports.deviationText = function (val) {
+  return val > 0 ? "+" + val : "" + val;
+};
+</wxs>
+
+<scroll-view class="stats-scroll" scroll-y="true">
   <view class="screen page-gap" style="padding-top: {{pageTopInset}}px;">
-    <view class="header-copy trend-header-copy">
-      <text class="hero-title">这一周的节奏</text>
+
+    <!-- Header -->
+    <view class="header-copy stats-header">
+      <text class="hero-title">数据趋势</text>
       <text class="hero-subtitle">连续 {{streakDays}} 天有记录，慢慢看清身体反馈。</text>
     </view>
 
+    <!-- Overview Card (概览 + 热量趋势合并) -->
     <view class="soft-card">
-      <view class="card-head">
-        <text class="section-title">本周概览</text>
-      </view>
-      <text class="summary-calorie mono-text">周均 {{weeklyAverageCalories}} kcal / 天</text>
-      <text class="body-text summary-copy">{{goalSubtitle}}</text>
-      <view class="meal-status-wrap">
-        <text class="body-text">今天已记录的餐次</text>
-        <view class="meal-status-row">
-          <view wx:for="{{todayMealTypeStatus}}" wx:key="value" class="meal-status-chip {{item.recorded ? 'meal-status-chip-active' : ''}}">
-            {{item.label}}{{item.count ? ' · ' + item.count : ''}}
+      <view class="card-head-row">
+        <text class="section-title">{{fmt.rangeLabel(timeRange)}}概览</text>
+        <view class="picker-trigger" bindtap="toggleCaloriePicker">
+          <text class="picker-label">{{fmt.rangeLabel(timeRange)}}</text>
+          <text class="picker-arrow">{{showCaloriePicker ? '▲' : '▼'}}</text>
+          <!-- Dropdown -->
+          <view wx:if="{{showCaloriePicker}}" class="picker-dropdown" catchtap="">
+            <view
+              wx:for="{{timeRangeOptions}}"
+              wx:key="value"
+              class="picker-option {{timeRange === item.value ? 'picker-option-active' : ''}}"
+              data-value="{{item.value}}"
+              bindtap="selectTimeRange"
+            >{{item.label}}</view>
           </view>
         </view>
       </view>
-      <text wx:if="{{loading}}" class="status-text">正在同步最近 7 天数据...</text>
-      <text wx:if="{{errorText}}" class="error-text">{{errorText}}</text>
-    </view>
 
-    <view class="soft-card">
-      <view class="card-head">
-        <text class="section-title">本周热量趋势</text>
+      <text class="summary-calorie mono-text">{{fmt.rangeAvgLabel(timeRange)}} {{averageCalories}} kcal</text>
+      <text class="body-text summary-copy">目标 {{dailyCalorieTarget}} kcal / 天</text>
+      <view class="stats-grid">
+        <view class="stat-item">
+          <text class="stat-value {{calorieDeviation > 0 ? 'stat-negative' : 'stat-positive'}}">{{fmt.deviationText(calorieDeviation)}} kcal</text>
+          <text class="stat-label">与目标偏差</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{recordingRate}}</text>
+          <text class="stat-label">记录天数</text>
+        </view>
       </view>
-      <view wx:if="{{hasTrendData}}">
+      <text wx:if="{{loading}}" class="status-text">正在同步数据...</text>
+      <text wx:if="{{errorText}}" class="error-text">{{errorText}}</text>
+
+      <!-- Divider -->
+      <view class="card-divider"></view>
+
+      <!-- Calorie Trend Bar Chart -->
+      <text class="section-subtitle">热量趋势</text>
+      <view wx:if="{{hasTrendData}}" class="chart-container">
         <view class="chart-wrap">
-          <view wx:for="{{weeklyTrend}}" wx:key="label" class="chart-item">
+          <view wx:for="{{calorieTrend}}" wx:key="label" class="chart-item">
             <view class="chart-bar-track">
               <view class="chart-bar" style="height: {{item.barHeight}}rpx; background: {{item.hitTarget ? '#69B8A3' : '#FA725D'}};"></view>
             </view>
             <text class="mono-text chart-label">{{item.label}}</text>
           </view>
         </view>
-
+        <view class="chart-legend">
+          <view class="legend-item">
+            <view class="legend-dot legend-dot-hit"></view>
+            <text class="helper-text">达标</text>
+          </view>
+          <view class="legend-item">
+            <view class="legend-dot legend-dot-over"></view>
+            <text class="helper-text">超标</text>
+          </view>
+        </view>
       </view>
       <text wx:else class="body-text empty-state">还没有足够的数据形成趋势，先去记录今天的第一餐吧。</text>
     </view>
 
+    <!-- Weight Trend Card -->
+    <view class="soft-card weight-card-wrap">
+      <view class="card-head-row">
+        <text class="section-title">{{weightMetric === 'weight' ? '体重' : '体脂率'}}变化</text>
+        <view class="picker-trigger" bindtap="toggleWeightPicker">
+          <text class="picker-label">{{weightMetric === 'weight' ? '体重' : '体脂率'}}</text>
+          <text class="picker-arrow">{{showWeightPicker ? '▲' : '▼'}}</text>
+          <view wx:if="{{showWeightPicker}}" class="picker-dropdown picker-dropdown-right" catchtap="">
+            <view
+              wx:for="{{weightMetricOptions}}"
+              wx:key="value"
+              class="picker-option {{weightMetric === item.value ? 'picker-option-active' : ''}}"
+              data-value="{{item.value}}"
+              bindtap="selectWeightMetric"
+            >{{item.label}}</view>
+          </view>
+        </view>
+      </view>
+      <text wx:if="{{latestWeight && weightMetric === 'weight'}}" class="weight-latest mono-text">最新 {{latestWeight}} kg</text>
+      <view wx:if="{{hasWeightData}}" class="weight-canvas-wrap">
+        <canvas type="2d" id="weightCanvas" class="weight-canvas"></canvas>
+      </view>
+      <view wx:elif="{{!showWeightInput}}" class="weight-empty">
+        <text class="body-text weight-empty-text">{{weightMetric === 'weight' ? '记录体重变化，更清晰地看到身体趋势。' : '记录体脂率变化，追踪身体成分改善。'}}</text>
+      </view>
+      <button class="pill-action" bindtap="toggleWeightInput">{{showWeightInput ? '取消' : '＋ 记录体重'}}</button>
+      <view wx:if="{{showWeightInput}}" class="weight-input-section">
+        <view class="weight-input-row">
+          <input
+            class="weight-input"
+            type="digit"
+            placeholder="例如 58.5"
+            placeholder-class="weight-input-placeholder"
+            value="{{weightInput}}"
+            bindinput="handleWeightInput"
+            confirm-type="done"
+            bindconfirm="handleSaveWeight"
+          />
+          <text class="weight-unit">{{weightMetric === 'weight' ? 'kg' : '%'}}</text>
+          <button class="pill-action weight-save-btn" bindtap="handleSaveWeight">保存</button>
+        </view>
+        <text wx:if="{{weightError}}" class="error-text">{{weightError}}</text>
+      </view>
+    </view>
+
+    <!-- Insight Card -->
     <view class="soft-card">
       <view class="card-head">
         <text class="section-title">温和提醒</text>
       </view>
-      <text class="body-text summary-copy">{{weeklyInsight}}</text>
-      <button class="record-pill" bindtap="goRecord">去记录一餐</button>
+      <text class="body-text summary-copy">{{insight}}</text>
+      <button class="pill-action" bindtap="goRecord">去记录一餐</button>
     </view>
+
   </view>
 </scroll-view>

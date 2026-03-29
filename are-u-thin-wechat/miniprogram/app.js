@@ -5,6 +5,8 @@ App({
     this.globalData = {
       env: "cloud1-5g7efswaf4780b4c",
       store,
+      pendingMealItems: [],
+      pendingImagePath: "",
     };
 
     store.ensureState();

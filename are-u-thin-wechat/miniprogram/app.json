@@ -5,6 +5,7 @@
     "pages/dashboard/index",
     "pages/record/index",
     "pages/trend/index",
+    "pages/community/index",
     "pages/coach/index",
     "pages/profile/index"
   ],
@@ -28,12 +29,12 @@
         "text": "今日"
       },
       {
-        "pagePath": "pages/record/index",
+        "pagePath": "pages/trend/index",
         "text": "记录"
       },
       {
-        "pagePath": "pages/trend/index",
-        "text": "趋势"
+        "pagePath": "pages/community/index",
+        "text": "社区"
       },
       {
         "pagePath": "pages/profile/index",

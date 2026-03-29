@@ -11,6 +11,7 @@ const STORAGE_KEYS = {
   user: "are_u_thin_user",
   identityReady: "are_u_thin_identity_ready",
   pendingPublicProfile: "are_u_thin_pending_public_profile",
+  weightLogs: "are_u_thin_weight_logs",
 };
 const read = (key, fallback) => { try { const value = wx.getStorageSync(key); return value === "" || value === undefined ? fallback : value; } catch (error) { return fallback; } };
 const write = (key, value) => { wx.setStorageSync(key, value); };
@@ -31,6 +32,8 @@ const hasIdentitySession = () => !!read(STORAGE_KEYS.identityReady, false);
 const saveIdentitySession = (value) => write(STORAGE_KEYS.identityReady, !!value);
 const getPendingPublicProfile = () => read(STORAGE_KEYS.pendingPublicProfile, null);
 const savePendingPublicProfile = (profile) => write(STORAGE_KEYS.pendingPublicProfile, profile || null);
+const getWeightLogs = () => read(STORAGE_KEYS.weightLogs, []);
+const saveWeightLogs = (logs) => write(STORAGE_KEYS.weightLogs, logs);
 const canUseCloud = () => typeof wx !== "undefined" && !!wx.cloud;
 const MEAL_TYPE_OPTIONS = [
   { value: "breakfast", label: "早餐", shortLabel: "早" },
@@ -318,5 +321,85 @@ async function buildProfileViewModel() {
 }
 async function saveSettings(settings) { const next = persistSettings(settings); if (canUseCloud() && getProfile()) { try { await cloudService.updateProfile({}, next); } catch (error) { console.error("[store] saveSettings sync failed", error); } } return next; }
 function buildCoachRequestContext() { const dashboard = buildDashboardLocal(); return { profile: dashboard.profile, todaySummary: dashboard.todaySummary, latestSuggestion: dashboard.latestSuggestion, recentMeals: dashboard.todayMeals.slice(0, 3), settings: getSettings() }; }
+function buildStatsViewModelLocal(range) {
+  range = range || "week";
+  var profile = getProfile() || appData.createDefaultProfile();
+  var mealLogs = getMealLogs().map(mapCloudMeal);
 
-module.exports = { ensureState, initUser, loginWithWechat, ensurePageAccess, resolveEntryRoute, hasIdentitySession, getPendingPublicProfile, getUser, getProfile, saveProfile, getMealLogs, saveMealLogs, getLatestSuggestion, saveLatestSuggestion, getLastAnalysis, saveLastAnalysis, getCoachMessages, saveCoachMessages, getSettings, saveSettings, completeOnboarding, updateGoal, analyzeMealPreview, saveAnalyzedMeal, addCoachMessage, buildDashboardViewModel, buildTrendViewModel, buildProfileViewModel, buildCoachRequestContext, appData, inferMealType, MEAL_TYPE_OPTIONS };
+  // ── DEMO DATA: 无真实数据时注入示例，方便 UI 预览 ──
+  if (mealLogs.length === 0) {
+    var now = new Date(); now.setHours(0, 0, 0, 0);
+    var demoCalories = [1350, 1520, 1680, 1410, 1580, 0, 0];
+    var demoNames = ["酸奶燕麦碗", "鸡胸肉藜麦沙拉", "三文鱼饭+番茄牛肉意面", "全麦三明治+轻盈便当", "鸡胸沙拉+三文鱼饭", "", ""];
+    var demoNotes = [
+      { calories: 320, protein: 19, carbs: 42, fat: 9 },
+      { calories: 405, protein: 33, carbs: 31, fat: 13 },
+      { calories: 1098, protein: 64, carbs: 107, fat: 48 },
+      { calories: 828, protein: 48, carbs: 86, fat: 28 },
+      { calories: 945, protein: 67, carbs: 76, fat: 37 },
+    ];
+    var demoTimestamps = [];
+    for (var di = 6; di >= 0; di--) { var dd = new Date(now); dd.setDate(dd.getDate() - di); demoTimestamps.push(dd.getTime()); }
+    demoTimestamps.forEach(function (ts, idx) {
+      if (demoCalories[idx] > 0) {
+        mealLogs.push({ timestamp: ts, mealType: "午餐", name: demoNames[idx], note: "", nutrition: demoNotes[idx], score: "不错", aiAnalysis: "均衡的一餐" });
+      }
+    });
+  }
+  // ── END DEMO DATA ──
+
+  var target = appData.buildProfileMetrics(profile).dailyCalorieTarget;
+  var trend = appData.buildCalorieTrend(mealLogs, target, range);
+  var avgCal = trend.length ? Math.round(trend.reduce(function (s, i) { return s + i.calories; }, 0) / trend.length) : 0;
+  var todaySummary = normalizeSummary(appData.getTodaySummary(mealLogs), appData.getTodayMeals(mealLogs));
+  var now2 = new Date(); now2.setHours(0, 0, 0, 0);
+  var totalDays = range === "week" ? 7 : range === "month" ? 30 : 365;
+  var startTime = now2.getTime() - (totalDays - 1) * 86400000;
+  var recordingDays = new Set(mealLogs.filter(function (i) { return i.timestamp >= startTime; }).map(function (i) { return new Date(i.timestamp).toDateString(); })).size;
+  var weightLogs = getWeightLogs();
+
+  // ── DEMO DATA: 无体重记录时注入示例 ──
+  if (weightLogs.length === 0) {
+    var wn = new Date();
+    var demoWeights = [62.5, 62.3, 62.1, 61.8, 61.6, 61.4, 61.2];
+    for (var wi = 6; wi >= 0; wi--) {
+      var wd = new Date(wn); wd.setDate(wd.getDate() - wi);
+      weightLogs.push({ weight: demoWeights[6 - wi], date: wd.toISOString().slice(0, 10) });
+    }
+  }
+  // ── END DEMO DATA ──
+
+  var weightTrend = appData.buildWeightTrendData(weightLogs, range);
+  var sortedWeights = weightLogs.slice().sort(function (a, b) { return String(a.date || a.timestamp).localeCompare(String(b.date || b.timestamp)); });
+  var latestWeight = sortedWeights.length ? sortedWeights[sortedWeights.length - 1].weight : 0;
+  return {
+    streakDays: appData.getStreakDays(mealLogs),
+    calorieTrend: trend,
+    averageCalories: avgCal,
+    dailyCalorieTarget: target,
+    calorieDeviation: avgCal - target,
+    recordingRate: recordingDays + "/" + totalDays,
+    insight: appData.buildRangeInsight(avgCal, target, range),
+    goalSubtitle: appData.getGoalOption(profile.goal).supportiveSubtitle,
+    hasTrendData: trend.some(function (i) { return i.calories > 0; }),
+    todayMealTypeStatus: buildMealTypeStatus(todaySummary),
+    timeRange: range,
+    weightTrend: weightTrend,
+    latestWeight: latestWeight,
+    hasWeightData: weightTrend.length > 0,
+  };
+}
+async function buildStatsViewModel(range) { range = range || "week"; return buildStatsViewModelLocal(range); }
+function saveWeightRecord(weight, dateStr) {
+  if (!weight || weight <= 0) return false;
+  var logs = getWeightLogs();
+  dateStr = dateStr || new Date().toISOString().slice(0, 10);
+  var idx = logs.findIndex(function (l) { return l.date === dateStr; });
+  if (idx >= 0) logs[idx].weight = weight;
+  else logs.push({ weight: weight, date: dateStr });
+  logs.sort(function (a, b) { return String(a.date || a.timestamp).localeCompare(String(b.date || b.timestamp)); });
+  saveWeightLogs(logs);
+  return true;
+}
+
+module.exports = { ensureState, initUser, loginWithWechat, ensurePageAccess, resolveEntryRoute, hasIdentitySession, getPendingPublicProfile, getUser, getProfile, saveProfile, getMealLogs, saveMealLogs, getLatestSuggestion, saveLatestSuggestion, getLastAnalysis, saveLastAnalysis, getCoachMessages, saveCoachMessages, getSettings, saveSettings, completeOnboarding, updateGoal, analyzeMealPreview, saveAnalyzedMeal, addCoachMessage, buildDashboardViewModel, buildTrendViewModel, buildProfileViewModel, buildStatsViewModel, saveWeightRecord, buildCoachRequestContext, appData, inferMealType, MEAL_TYPE_OPTIONS };
