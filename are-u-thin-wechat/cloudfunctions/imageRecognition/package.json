@@ -1,0 +1,14 @@
+{
+  "name": "imageRecognition",
+  "version": "1.0.0",
+  "description": "Image recognition cloud function using Tencent Cloud AI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests configured\""
+  },
+  "license": "ISC",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.0",
+    "tencentcloud-sdk-nodejs": "^4.0.0"
+  }
+}
