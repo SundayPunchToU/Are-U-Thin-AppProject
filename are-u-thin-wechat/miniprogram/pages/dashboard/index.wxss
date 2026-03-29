@@ -15,15 +15,15 @@
 
 .dashboard-badge {
   flex-shrink: 0;
-  width: 104rpx;
-  height: 104rpx;
-  margin-top: 6rpx;
-  border-radius: 52rpx;
-  box-shadow: 0 20rpx 36rpx rgba(250, 114, 93, 0.24);
+  width: 100rpx;
+  height: 100rpx;
+  margin-top: 8rpx;
+  border-radius: 50rpx;
+  box-shadow: 0 18rpx 34rpx rgba(250, 114, 93, 0.22);
 }
 
 .dashboard-badge-text {
-  font-size: 44rpx;
+  font-size: 42rpx;
 }
 
 .dashboard-card {
@@ -32,24 +32,32 @@
 }
 
 .hero-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 247, 243, 0.92) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 247, 243, 0.96) 100%);
 }
 
-.dashboard-meta {
-  display: block;
-  margin-top: 10rpx;
+.card-head {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-caption {
+  margin-top: 8rpx;
 }
 
 .goal-calorie {
   display: block;
   margin-top: 18rpx;
-  margin-bottom: 18rpx;
-  font-size: 50rpx;
-  color: #28282e;
+  margin-bottom: 16rpx;
+  font-size: 46rpx;
+  color: #25262c;
 }
 
 .goal-progress {
-  margin-bottom: 20rpx;
+  margin-bottom: 18rpx;
+}
+
+.dashboard-highlight {
+  color: #4f5561;
 }
 
 .dashboard-tip {
@@ -57,7 +65,10 @@
 }
 
 .meal-status-wrap {
-  margin-top: 18rpx;
+  margin-top: 20rpx;
+  padding: 18rpx 18rpx 4rpx;
+  border-radius: 26rpx;
+  background: rgba(255, 255, 255, 0.56);
 }
 
 .meal-status-title {
@@ -71,13 +82,13 @@
 }
 
 .meal-status-chip {
-  margin-right: 14rpx;
-  margin-bottom: 14rpx;
+  margin-right: 12rpx;
+  margin-bottom: 12rpx;
   padding: 12rpx 18rpx;
   border-radius: 999rpx;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.88);
   font-size: 24rpx;
-  color: #8b909b;
+  color: #8a909b;
 }
 
 .meal-status-chip-active {
@@ -98,6 +109,7 @@
   color: #ffffff;
   font-size: 26rpx;
   font-weight: 600;
+  box-shadow: 0 12rpx 24rpx rgba(250, 114, 93, 0.16);
 }
 
 .macro-item {
@@ -105,7 +117,7 @@
 }
 
 .macro-item:first-of-type {
-  margin-top: 18rpx;
+  margin-top: 20rpx;
 }
 
 .macro-head {
@@ -117,7 +129,7 @@
 
 .macro-title {
   font-size: 28rpx;
-  color: #28282e;
+  color: #25262c;
 }
 
 .list-header {
@@ -126,11 +138,21 @@
   justify-content: space-between;
 }
 
+.meal-list {
+  margin-top: 8rpx;
+}
+
 .meal-item {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-top: 22rpx;
+  margin-top: 18rpx;
+  padding: 20rpx 0 0;
+  border-top: 1rpx solid rgba(129, 135, 147, 0.12);
+}
+
+.meal-item:first-child {
+  border-top: none;
 }
 
 .meal-copy {
@@ -147,18 +169,21 @@
 
 .meal-name {
   display: block;
-  margin-bottom: 6rpx;
   font-size: 30rpx;
   font-weight: 600;
-  color: #28282e;
+  color: #25262c;
+}
+
+.meal-score {
+  color: #666c78;
 }
 
 .meal-note {
   display: block;
   margin-top: 8rpx;
   font-size: 24rpx;
-  line-height: 1.5;
-  color: #9aa0ab;
+  line-height: 1.58;
+  color: #98a0ad;
 }
 
 .meal-type-badge {
@@ -173,7 +198,7 @@
 }
 
 .meal-calorie {
-  margin-top: 4rpx;
+  margin-top: 2rpx;
 }
 
 .empty-copy {

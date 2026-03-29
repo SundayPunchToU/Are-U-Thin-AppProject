@@ -11,13 +11,15 @@
     </view>
 
     <view class="soft-card dashboard-card hero-card">
-      <text class="section-title">今日目标感知</text>
-      <text class="body-text dashboard-meta">{{goal.label}} · 连续记录 {{streakDays}} 天</text>
+      <view class="card-head">
+        <text class="section-title">今日目标感知</text>
+      </view>
+      <text class="mono-text dashboard-meta">{{goal.label}} · 连续记录 {{streakDays}} 天</text>
       <text class="goal-calorie mono-text">{{todaySummary.calories}} / {{dailyCalorieTarget}} kcal</text>
       <view class="progress-track goal-progress">
         <view class="progress-fill" style="width: {{calorieProgress}}%; background: #FA725D;"></view>
       </view>
-      <text class="body-text">{{remainingText}}</text>
+      <text class="body-text dashboard-highlight">{{remainingText}}</text>
       <view class="meal-status-wrap">
         <text class="body-text meal-status-title">今日餐次</text>
         <view class="meal-status-row">
@@ -28,12 +30,14 @@
       </view>
       <text class="body-text dashboard-tip">{{latestSuggestion || goalSubtitle}}</text>
       <text wx:if="{{errorText}}" class="error-text">{{errorText}}</text>
-      <text wx:if="{{loading}}" class="body-text status-text">正在同步今日数据...</text>
+      <text wx:if="{{loading}}" class="status-text">正在同步今日数据...</text>
       <button class="pill-action" bindtap="goRecord">＋ 记录新的一餐</button>
     </view>
 
     <view class="soft-card dashboard-card">
-      <text class="section-title">今日三大营养素</text>
+      <view class="card-head">
+        <text class="section-title">今日三大营养素</text>
+      </view>
       <view wx:for="{{macroTargets}}" wx:key="title" class="macro-item">
         <view class="macro-head">
           <text class="macro-title">{{item.title}}</text>
@@ -50,14 +54,14 @@
         <text class="section-title">最近记录</text>
         <text class="mono-text">{{todayMeals.length}} 餐</text>
       </view>
-      <view wx:if="{{todayMeals.length}}">
+      <view wx:if="{{todayMeals.length}}" class="meal-list">
         <view wx:for="{{todayMeals}}" wx:key="id" class="meal-item">
           <view class="meal-copy">
             <view class="meal-title-row">
               <text class="meal-name">{{item.name}}</text>
               <text class="meal-type-badge">{{item.mealTypeLabel}}</text>
             </view>
-            <text class="body-text">{{item.scoreTitle}}</text>
+            <text class="body-text meal-score">{{item.scoreTitle}}</text>
             <text wx:if="{{item.note}}" class="meal-note">{{item.note}}</text>
           </view>
           <text class="mono-text meal-calorie">{{item.nutrition.calories}} kcal</text>

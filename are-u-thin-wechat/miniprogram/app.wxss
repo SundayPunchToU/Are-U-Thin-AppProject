@@ -36,28 +36,29 @@ button::after {
 
 .screen {
   min-height: 100vh;
-  padding: 32rpx 32rpx 198rpx;
+  padding: 36rpx 32rpx 214rpx;
 }
 
 .screen-tight {
   min-height: 100vh;
-  padding: 40rpx 32rpx 56rpx;
+  padding: 44rpx 32rpx 72rpx;
 }
 
 .hero-title {
   display: block;
-  font-size: 60rpx;
-  line-height: 1.14;
+  font-size: 56rpx;
+  line-height: 1.16;
   font-weight: 700;
-  color: #28282e;
+  letter-spacing: 0.6rpx;
+  color: #25262c;
 }
 
 .hero-subtitle {
   display: block;
-  margin-top: 12rpx;
+  margin-top: 14rpx;
   font-size: 28rpx;
-  line-height: 1.46;
-  color: #747884;
+  line-height: 1.6;
+  color: #6f7480;
 }
 
 .header-copy {
@@ -67,54 +68,65 @@ button::after {
 
 .soft-card {
   width: 100%;
-  padding: 28rpx;
-  border-radius: 40rpx;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 20rpx 48rpx rgba(26, 26, 26, 0.08);
+  padding: 32rpx 30rpx;
+  border-radius: 36rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1rpx solid rgba(255, 255, 255, 0.78);
+  box-shadow: 0 18rpx 42rpx rgba(31, 35, 41, 0.07);
 }
 
 .section-title {
-  font-size: 34rpx;
-  line-height: 1.3;
+  font-size: 32rpx;
+  line-height: 1.34;
   font-weight: 600;
-  color: #28282e;
+  color: #25262c;
 }
 
 .body-text {
-  font-size: 28rpx;
+  font-size: 27rpx;
+  line-height: 1.68;
+  color: #666c78;
+}
+
+.helper-text {
+  font-size: 24rpx;
   line-height: 1.6;
-  color: #747884;
+  color: #98a0ad;
 }
 
 .status-text {
   display: block;
   margin-top: 16rpx;
+  font-size: 24rpx;
   color: #69b8a3;
 }
 
 .error-text {
   display: block;
   margin-top: 16rpx;
+  font-size: 24rpx;
+  line-height: 1.55;
   color: #e96b5b;
 }
 
 .mono-text {
   font-size: 24rpx;
-  line-height: 1.4;
-  color: #747884;
+  line-height: 1.45;
+  color: #737988;
   font-family: "Menlo", "SFMono-Regular", monospace;
 }
 
 .primary-button {
   width: 100%;
-  padding: 28rpx 32rpx;
-  border-radius: 36rpx;
+  padding: 26rpx 32rpx;
+  border-radius: 32rpx;
   background: linear-gradient(135deg, #fc8a68 0%, #ffb46f 100%);
   color: #ffffff;
-  font-size: 32rpx;
+  font-size: 30rpx;
   font-weight: 600;
+  letter-spacing: 0.4rpx;
   text-align: center;
-  box-shadow: 0 20rpx 36rpx rgba(252, 138, 104, 0.25);
+  box-shadow: 0 18rpx 34rpx rgba(252, 138, 104, 0.24);
 }
 
 .primary-button.disabled {
@@ -125,11 +137,11 @@ button::after {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 14rpx 24rpx;
+  padding: 14rpx 22rpx;
   border-radius: 999rpx;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.88);
   font-size: 24rpx;
-  color: #28282e;
+  color: #515864;
 }
 
 .gradient-avatar {
@@ -142,10 +154,10 @@ button::after {
 
 .progress-track {
   width: 100%;
-  height: 14rpx;
+  height: 16rpx;
   overflow: hidden;
   border-radius: 999rpx;
-  background: rgba(116, 120, 132, 0.12);
+  background: rgba(116, 120, 132, 0.1);
 }
 
 .progress-fill {
@@ -161,7 +173,7 @@ button::after {
 .page-gap > view,
 .page-gap > scroll-view,
 .page-gap > button {
-  margin-top: 24rpx;
+  margin-top: 28rpx;
 }
 
 .page-gap > view:first-child,

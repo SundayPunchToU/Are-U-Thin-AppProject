@@ -5,7 +5,7 @@
 
 .onboarding-screen > view,
 .onboarding-screen > button {
-  margin-top: 24rpx;
+  margin-top: 26rpx;
 }
 
 .onboarding-screen > view:first-child,
@@ -14,11 +14,11 @@
 }
 
 .onboarding-head {
-  margin-top: 8rpx;
+  margin-top: 6rpx;
 }
 
 .onboarding-header-copy {
-  max-width: 92%;
+  max-width: 90%;
 }
 
 .onboarding-header-copy .hero-subtitle {
@@ -31,6 +31,15 @@
   flex-direction: column;
 }
 
+.section-head {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-hint {
+  margin-top: 8rpx;
+}
+
 .goal-list {
   margin-top: 24rpx;
 }
@@ -38,10 +47,11 @@
 .goal-option {
   display: flex;
   align-items: flex-start;
-  padding: 24rpx;
-  margin-top: 16rpx;
+  padding: 24rpx 22rpx;
+  margin-top: 14rpx;
   border-radius: 28rpx;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(249, 250, 252, 0.92);
+  border: 1rpx solid rgba(240, 223, 217, 0.55);
 }
 
 .goal-option:first-child {
@@ -49,11 +59,13 @@
 }
 
 .goal-option-active {
-  background: #fa725d;
+  background: linear-gradient(135deg, #fa725d 0%, #ff947d 100%);
+  box-shadow: 0 16rpx 30rpx rgba(250, 114, 93, 0.18);
 }
 
 .goal-emoji {
   font-size: 42rpx;
+  line-height: 1.1;
 }
 
 .goal-copy {
@@ -65,7 +77,7 @@
   display: block;
   font-size: 30rpx;
   font-weight: 600;
-  color: #28282e;
+  color: #25262c;
 }
 
 .goal-name-active,
@@ -76,13 +88,16 @@
 .goal-subcopy {
   display: block;
   margin-top: 8rpx;
-  font-size: 25rpx;
-  line-height: 1.5;
-  color: #747884;
+  font-size: 24rpx;
+  line-height: 1.58;
+  color: #6f7480;
 }
 
 .metric-block {
   margin-top: 24rpx;
+  padding: 20rpx 20rpx 10rpx;
+  border-radius: 28rpx;
+  background: rgba(248, 249, 251, 0.75);
 }
 
 .metric-block-last {
@@ -93,25 +108,29 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14rpx;
+  margin-bottom: 12rpx;
 }
 
 .metric-label {
-  font-size: 30rpx;
-  color: #28282e;
+  font-size: 29rpx;
+  color: #25262c;
 }
 
 .metric-value {
-  font-size: 28rpx;
-  color: #747884;
+  font-size: 26rpx;
+  color: #6f7480;
   font-family: "Menlo", "SFMono-Regular", monospace;
+}
+
+.preview-head {
+  margin-bottom: 4rpx;
 }
 
 .preview-calorie {
   margin-top: 18rpx;
-  font-size: 52rpx;
+  font-size: 48rpx;
   line-height: 1.2;
-  color: #28282e;
+  color: #25262c;
   font-family: "Menlo", "SFMono-Regular", monospace;
 }
 
@@ -119,9 +138,10 @@
   margin-top: 10rpx;
 }
 
+.preview-message {
+  margin-top: 8rpx;
+}
+
 .preview-footnote {
   margin-top: 12rpx;
-  font-size: 26rpx;
-  line-height: 1.5;
-  color: #747884;
 }

@@ -7,11 +7,20 @@
   padding-top: 4rpx;
 }
 
+.card-head {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-caption {
+  margin-top: 8rpx;
+}
+
 .summary-calorie {
   display: block;
   margin-top: 18rpx;
-  font-size: 44rpx;
-  color: #28282e;
+  font-size: 42rpx;
+  color: #25262c;
 }
 
 .summary-copy {
@@ -21,6 +30,9 @@
 
 .meal-status-wrap {
   margin-top: 18rpx;
+  padding: 18rpx 18rpx 4rpx;
+  border-radius: 26rpx;
+  background: rgba(255, 255, 255, 0.56);
 }
 
 .meal-status-row {
@@ -30,11 +42,11 @@
 }
 
 .meal-status-chip {
-  margin-right: 14rpx;
-  margin-bottom: 14rpx;
+  margin-right: 12rpx;
+  margin-bottom: 12rpx;
   padding: 12rpx 18rpx;
   border-radius: 999rpx;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.86);
   font-size: 24rpx;
   color: #8b909b;
 }
@@ -51,7 +63,8 @@
   justify-content: space-between;
   min-height: 280rpx;
   margin-top: 24rpx;
-  margin-bottom: 18rpx;
+  margin-bottom: 14rpx;
+  padding: 0 6rpx;
 }
 
 .chart-item {
@@ -67,6 +80,8 @@
   justify-content: center;
   width: 48rpx;
   height: 196rpx;
+  border-radius: 24rpx;
+  background: linear-gradient(180deg, rgba(242, 244, 247, 0.4) 0%, rgba(242, 244, 247, 0.08) 100%);
 }
 
 .chart-bar {
@@ -75,7 +90,11 @@
 }
 
 .chart-label {
-  margin-top: 8rpx;
+  margin-top: 10rpx;
+}
+
+.chart-note {
+  display: block;
 }
 
 .empty-state {
@@ -95,4 +114,5 @@
   color: #ffffff;
   font-size: 26rpx;
   font-weight: 600;
+  box-shadow: 0 12rpx 24rpx rgba(250, 114, 93, 0.16);
 }

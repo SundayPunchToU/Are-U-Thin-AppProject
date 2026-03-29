@@ -5,7 +5,9 @@
   </view>
 
   <view class="soft-card onboarding-card">
-    <text class="section-title">1. 你的目标</text>
+    <view class="section-head">
+      <text class="section-title">1. 你的目标</text>
+    </view>
     <view class="goal-list">
       <view
         wx:for="{{goalOptions}}"
@@ -24,7 +26,9 @@
   </view>
 
   <view class="soft-card onboarding-card">
-    <text class="section-title">2. 你的基础信息</text>
+    <view class="section-head">
+      <text class="section-title">2. 你的基础信息</text>
+    </view>
 
     <view class="metric-block">
       <view class="metric-header">
@@ -60,11 +64,13 @@
   </view>
 
   <view class="soft-card preview-card">
-    <text class="section-title">3. 今日建议</text>
+    <view class="section-head preview-head">
+      <text class="section-title">3. 今日建议</text>
+    </view>
     <text class="preview-calorie">≈ {{calorieTarget}} kcal / 天</text>
     <text class="body-text preview-body">蛋白 {{macroTargets.proteinTarget}}g · 碳水 {{macroTargets.carbTarget}}g · 脂肪 {{macroTargets.fatTarget}}g</text>
-    <text class="body-text">{{goalTitle}}，从第一餐开始慢慢建立节奏就很好。</text>
-    <text class="preview-footnote">{{goalSubtitle}}</text>
+    <text class="body-text preview-message">{{goalTitle}}，从第一餐开始慢慢建立节奏就很好。</text>
+    <text class="helper-text preview-footnote">{{goalSubtitle}}</text>
   </view>
 
   <button class="primary-button {{isSubmitting ? 'disabled' : ''}}" disabled="{{isSubmitting}}" bindtap="submitProfile">{{isSubmitting ? '保存中...' : '开始记录今天'}}</button>

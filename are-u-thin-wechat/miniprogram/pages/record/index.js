@@ -25,7 +25,6 @@ Page({
     previewResult: null,
     todayMeals: [],
     pageTopInset: layout.getPageTopInset(),
-    useAI: true,
   },
 
   async onShow() {
@@ -113,11 +112,10 @@ Page({
     });
 
     try {
-      // 获取用户上下文
       const context = store.buildCoachRequestContext();
       
-      // 调用 AI 分析
-      const result = await aiService.analyzeMealWithAI({
+      // 使用新的图片分析流程
+      const result = await aiService.analyzeMealWithImage({
         imagePath: this.data.imagePath,
         voiceNote: voiceNote,
         mealType: this.data.selectedMealType,
@@ -161,12 +159,15 @@ Page({
 
     this.setData({
       isSaving: true,
-      progressText: "正在上传并保存到云端...",
+      progressText: "正在保存到云端...",
       errorText: "",
     });
 
     try {
+      // 如果 AI 分析时已上传图片，使用返回的 fileID
+      const imageFileId = result.fileID || "";
       await store.saveAnalyzedMeal(result, this.data.voiceNote.trim(), this.data.imagePath, this.data.selectedMealType);
+      
       const nextMealType = store.inferMealType(Date.now());
       this.setData({
         imagePath: "",

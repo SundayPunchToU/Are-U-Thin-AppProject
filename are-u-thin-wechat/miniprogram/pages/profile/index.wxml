@@ -12,9 +12,12 @@
     </view>
 
     <view class="soft-card">
-      <text class="section-title">当前目标</text>
+      <view class="card-head">
+        <text class="section-title">当前目标</text>
+        <text class="helper-text card-caption">保持熟悉的目标结构，只把表达层级整理得更清楚。</text>
+      </view>
       <text class="body-text profile-description">{{goal.supportiveSubtitle}}</text>
-      <text wx:if="{{loading}}" class="body-text status-text">正在同步档案...</text>
+      <text wx:if="{{loading}}" class="status-text">正在同步档案...</text>
       <text wx:if="{{errorText}}" class="error-text">{{errorText}}</text>
       <view class="goal-switcher">
         <view
@@ -30,14 +33,20 @@
     </view>
 
     <view class="soft-card">
-      <text class="section-title">每日建议</text>
+      <view class="card-head">
+        <text class="section-title">每日建议</text>
+        <text class="helper-text card-caption">用一个核心目标配合三大营养素，信息更聚焦。</text>
+      </view>
       <text class="plan-goal">{{metrics.dailyCalorieTarget}} kcal / 天</text>
       <text class="body-text">蛋白 {{metrics.proteinTarget}}g · 碳水 {{metrics.carbTarget}}g · 脂肪 {{metrics.fatTarget}}g</text>
-      <text class="body-text profile-description">这些数值会跟着目标自动调整，用来帮助你更温和地把握每天节奏。</text>
+      <text class="helper-text profile-description">这些数值会跟着目标自动调整，用来帮助你更温和地把握每天节奏。</text>
     </view>
 
     <view class="soft-card">
-      <text class="section-title">最近状态</text>
+      <view class="card-head">
+        <text class="section-title">最近状态</text>
+        <text class="helper-text card-caption">看今天与近期节奏，不把信息堆满整页。</text>
+      </view>
       <view class="rhythm-row">
         <view class="rhythm-stat">
           <text class="rhythm-label">连续记录</text>
@@ -52,7 +61,6 @@
           <text class="rhythm-value">{{todaySummary.calories}} kcal</text>
         </view>
       </view>
-      <text class="body-text profile-description">当前页面已优先接入真实云端档案 / 今日数据；Coach 对话历史与餐食分析预览仍保留本地 mock。</text>
       <view class="shortcut-row">
         <button class="shortcut-pill shortcut-pill-coral" bindtap="goRecord">去记录一餐</button>
         <button class="shortcut-pill shortcut-pill-mint" bindtap="goDashboard">查看今日概览</button>
@@ -60,7 +68,10 @@
     </view>
 
     <view class="soft-card">
-      <text class="section-title">功能设置</text>
+      <view class="card-head">
+        <text class="section-title">功能设置</text>
+        <text class="helper-text card-caption">常用开关集中在一起，减少额外说明干扰。</text>
+      </view>
       <view class="setting-row">
         <text class="setting-label">晚间达标提醒</text>
         <switch color="#FA725D" checked="{{settings.reminderAtNight}}" data-key="reminderAtNight" bindchange="handleSettingChange" />

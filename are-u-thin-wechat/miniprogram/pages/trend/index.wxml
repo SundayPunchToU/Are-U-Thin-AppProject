@@ -6,7 +6,9 @@
     </view>
 
     <view class="soft-card">
-      <text class="section-title">本周概览</text>
+      <view class="card-head">
+        <text class="section-title">本周概览</text>
+      </view>
       <text class="summary-calorie mono-text">周均 {{weeklyAverageCalories}} kcal / 天</text>
       <text class="body-text summary-copy">{{goalSubtitle}}</text>
       <view class="meal-status-wrap">
@@ -17,12 +19,14 @@
           </view>
         </view>
       </view>
-      <text wx:if="{{loading}}" class="body-text status-text">正在同步最近 7 天数据...</text>
+      <text wx:if="{{loading}}" class="status-text">正在同步最近 7 天数据...</text>
       <text wx:if="{{errorText}}" class="error-text">{{errorText}}</text>
     </view>
 
     <view class="soft-card">
-      <text class="section-title">本周热量趋势</text>
+      <view class="card-head">
+        <text class="section-title">本周热量趋势</text>
+      </view>
       <view wx:if="{{hasTrendData}}">
         <view class="chart-wrap">
           <view wx:for="{{weeklyTrend}}" wx:key="label" class="chart-item">
@@ -32,13 +36,15 @@
             <text class="mono-text chart-label">{{item.label}}</text>
           </view>
         </view>
-        <text class="body-text">浅绿色表示更接近建议范围，珊瑚色表示这天吃得更丰盛一点。</text>
+
       </view>
       <text wx:else class="body-text empty-state">还没有足够的数据形成趋势，先去记录今天的第一餐吧。</text>
     </view>
 
     <view class="soft-card">
-      <text class="section-title">温和提醒</text>
+      <view class="card-head">
+        <text class="section-title">温和提醒</text>
+      </view>
       <text class="body-text summary-copy">{{weeklyInsight}}</text>
       <button class="record-pill" bindtap="goRecord">去记录一餐</button>
     </view>
